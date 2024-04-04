@@ -75,7 +75,7 @@ const SignupCard = () => {
           </svg>
           <input
             ref={emailRef}
-            type="text"
+            type="email"
             className="grow"
             placeholder="Email"
           />
