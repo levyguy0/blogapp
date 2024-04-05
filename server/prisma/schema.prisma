@@ -19,4 +19,33 @@ model User {
   name    String
   username String @unique
   password String
+  posts BlogPost[]
 }
+
+model BlogPost {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  author User @relation(fields: [authorId], references: [id])
+  authorId String @db.ObjectId
+  title String
+  description String
+  content String
+  // categoryIDs String[]   @db.ObjectId
+  // categories Category[] @relation(fields: [categoryIDs], references: [id])
+}
+
+// model Category {
+//   id String @id @default(auto()) @map("_id") @db.ObjectId
+//   name CategoryName
+//   blogPostIDs String[] @db.ObjectId
+//   blogPosts BlogPost[] @relation(fields: [blogPostIDs], references: [id])
+// }
+
+// enum CategoryName {
+//   TECH
+//   FINANCE
+//   MEDICINE
+//   POLITICS
+//   HISTORY
+//   GEOGRAPHY
+//   ENTERTAINMENT
+// }
