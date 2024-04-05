@@ -1,4 +1,5 @@
 import ShownUser from "@/models/ShownUser";
+import axios from "axios";
 import Link from "next/link";
 import React, { useEffect } from "react";
 
@@ -7,6 +8,13 @@ interface Props {
 }
 
 const NavBar = ({ user }: Props) => {
+  const logout = async () => {
+    await axios.get("http://localhost:8080/users/logout", {
+      withCredentials: true,
+    });
+    location.replace("/");
+  };
+
   return (
     <div>
       {!user ? (
@@ -49,7 +57,7 @@ const NavBar = ({ user }: Props) => {
                   className="menu dropdown-content z-[1] p-2 shadow bg-base-200 rounded-box w-52 mt-4"
                 >
                   <li>
-                    <button>Logout</button>
+                    <button onClick={logout}>Logout</button>
                   </li>
                 </ul>
               </div>
