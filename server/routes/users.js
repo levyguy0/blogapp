@@ -80,7 +80,8 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign(user.id, process.env.JWT_SECRET);
     res
       .cookie("auth", token, {
-        secure: true,
+        secure: false,
+        domain: "localhost",
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24 * 7,
       })
