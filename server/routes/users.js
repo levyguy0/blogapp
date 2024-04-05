@@ -3,41 +3,63 @@ const { PrismaClient } = require("@prisma/client");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
+const { body, validationResult } = require("express-validator");
 
 const router = express.Router();
 const prisma = new PrismaClient();
 
-router.post("/signup", async (req, res) => {
-  let user = await prisma.user.findUnique({
-    where: {
-      email: req.body.email,
-    },
-  });
+router.post(
+  "/signup",
+  [
+    [
+      body("username")
+        .isLength({ min: 4, max: 16 })
+        .withMessage("Must be between 4 and 16 characters long."),
+      body("name").notEmpty(),
+      body("email").isEmail().notEmpty().withMessage("Must be a valid email."),
+      body("password")
+        .isLength({ min: 8 })
+        .withMessage("Must be at least 8 characters long."),
+    ],
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
 
-  if (user) {
-    return res.status(400).json({ error: "Already Registered" });
-  }
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-  user = {
-    username: req.body.username,
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
-  };
-
-  const salt = await bcrypt.genSalt(10);
-  user.password = await bcrypt.hash(user.password, salt);
-
-  try {
-    user = await prisma.user.create({
-      data: user,
+    let user = await prisma.user.findUnique({
+      where: {
+        email: req.body.email,
+      },
     });
-    res.json({ user: user });
-  } catch (error) {
-    console.error("Error creating user:", error);
-    res.status(500).json({ error: "Error creating user" });
+
+    if (user) {
+      return res.status(400).json({ error: "Already Registered" });
+    }
+
+    user = {
+      username: req.body.username,
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+    };
+
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(user.password, salt);
+
+    try {
+      user = await prisma.user.create({
+        data: user,
+      });
+      res.json({ user: user });
+    } catch (error) {
+      console.error("Error creating user:", error);
+      res.status(500).json({ error: "Error creating user" });
+    }
   }
-});
+);
 
 router.post("/login", async (req, res) => {
   // check if users email found in db
