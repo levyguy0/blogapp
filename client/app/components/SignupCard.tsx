@@ -22,8 +22,11 @@ const SignupCard = () => {
       password: password,
     };
 
-    axios.post("http://localhost:8080/users/signup", user).then(() => {
-      location.replace("/login");
+    axios.post("http://localhost:8080/users/signup", user).then((res) => {
+      // location.replace("/login");
+      if (res.status != 200) {
+        console.log(res.data.error);
+      }
     });
   };
 
