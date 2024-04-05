@@ -1,6 +1,7 @@
 import ShownUser from "@/models/ShownUser";
 import axios from "axios";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React, { useEffect } from "react";
 
 interface Props {
@@ -8,6 +9,7 @@ interface Props {
 }
 
 const NavBar = ({ user }: Props) => {
+  const path = usePathname();
   const logout = async () => {
     await axios.get("http://localhost:8080/users/logout", {
       withCredentials: true,
@@ -20,7 +22,14 @@ const NavBar = ({ user }: Props) => {
       {!user ? (
         <div className="navbar bg-base-100 absolute">
           <div className="flex-1">
-            <Link href="/" className="btn btn-ghost text-xl">
+            <Link
+              href={
+                path == "/login" || path == "/signup" || path == "/"
+                  ? "/"
+                  : "/home"
+              }
+              className="btn btn-ghost text-xl"
+            >
               blogify
             </Link>
           </div>
@@ -38,7 +47,14 @@ const NavBar = ({ user }: Props) => {
       ) : (
         <div className="navbar bg-base-100 absolute">
           <div className="flex-1">
-            <Link href={"/"} className="text-xl btn btn-ghost">
+            <Link
+              href={
+                path == "/login" || path == "/signup" || path == "/"
+                  ? "/"
+                  : "/home"
+              }
+              className="text-xl btn btn-ghost"
+            >
               blogify
             </Link>
           </div>
