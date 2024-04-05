@@ -39,7 +39,7 @@ const SignupCard = () => {
     axios
       .post("http://localhost:8080/users/signup", user)
       .then((res) => {
-        // location.replace("/login");
+        location.replace("/login");
       })
       .catch((error: any) => {
         error.response.data.error.forEach((err: FieldError) => {

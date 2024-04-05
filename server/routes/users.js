@@ -69,13 +69,13 @@ router.post("/login", async (req, res) => {
     },
   });
   if (!user) {
-    return res.status(400).json({ error: `No account registered to ${email}` });
+    return res.status(400).json({ error: `Invalid email or password.` });
   }
 
   //if yes, check if db pwd matches request body pwd
   const validPassword = await bcrypt.compare(req.body.password, user.password);
   if (!validPassword) {
-    return res.status(400).json({ error: `Invalid email or password` });
+    return res.status(400).json({ error: `Invalid email or password.` });
   } else {
     const token = jwt.sign(user.id, process.env.JWT_SECRET);
     res
