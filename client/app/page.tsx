@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import NavBar from "./components/NavBar";
 import Hero from "./components/Hero";
 import { useEffect, useState } from "react";
@@ -12,7 +11,13 @@ export default function Home() {
     const checkLoggedIn = async () => {
       await axios
         .get("http://localhost:8080/users/me", { withCredentials: true })
-        .then((res) => setUser(res.data.user));
+        .then((res) => {
+          if (res.data.user) {
+            location.replace("/home");
+          } else {
+            return;
+          }
+        });
     };
 
     checkLoggedIn();

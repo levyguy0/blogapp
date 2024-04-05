@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { useEffect } from "react";
 
 interface Props {
-  user?: ShownUser;
+  user?: ShownUser | null;
 }
 
 const NavBar = ({ user }: Props) => {
