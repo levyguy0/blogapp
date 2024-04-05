@@ -1,15 +1,29 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import axios from "axios";
 import { redirect } from "next/navigation";
+
+interface FieldError {
+  msg: string;
+  path: string;
+}
 
 const SignupCard = () => {
   const usernameRef = useRef<HTMLInputElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const [usernameError, setUsernameError] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const handleSignup = () => {
+    setUsernameError("");
+    setNameError("");
+    setPasswordError("");
+    setEmailError("");
+
     const username = usernameRef.current?.value;
     const name = nameRef.current?.value;
     const email = emailRef.current?.value;
@@ -22,12 +36,29 @@ const SignupCard = () => {
       password: password,
     };
 
-    axios.post("http://localhost:8080/users/signup", user).then((res) => {
-      // location.replace("/login");
-      if (res.status != 200) {
-        console.log(res.data.error);
-      }
-    });
+    axios
+      .post("http://localhost:8080/users/signup", user)
+      .then((res) => {
+        // location.replace("/login");
+      })
+      .catch((error: any) => {
+        error.response.data.error.forEach((err: FieldError) => {
+          switch (err.path) {
+            case "username":
+              setUsernameError(err.msg);
+              break;
+            case "name":
+              setNameError(err.msg);
+              break;
+            case "email":
+              setEmailError(err.msg);
+              break;
+            case "password":
+              setPasswordError(err.msg);
+              break;
+          }
+        });
+      });
   };
 
   return (
@@ -44,12 +75,15 @@ const SignupCard = () => {
             <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
           </svg>
           <input
+            autoComplete="name"
+            id="name"
             ref={nameRef}
             type="text"
             className="grow"
             placeholder="Name"
           />
         </label>
+        {nameError && <p className="text-sm text-error">{nameError}</p>}
         <label className="input input-bordered flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -60,12 +94,15 @@ const SignupCard = () => {
             <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
           </svg>
           <input
+            autoComplete="off"
+            id="username"
             ref={usernameRef}
             type="text"
             className="grow"
             placeholder="Username"
           />
         </label>
+        {usernameError && <p className="text-sm text-error">{usernameError}</p>}
         <label className="input input-bordered flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -77,12 +114,15 @@ const SignupCard = () => {
             <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
           </svg>
           <input
+            autoComplete="email"
+            id="email"
             ref={emailRef}
             type="email"
             className="grow"
             placeholder="Email"
           />
         </label>
+        {emailError && <p className="text-sm text-error">{emailError}</p>}
         <label className="input input-bordered flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -97,12 +137,15 @@ const SignupCard = () => {
             />
           </svg>
           <input
+            autoComplete="off"
+            id="password"
             ref={passwordRef}
             type="password"
             className="grow"
             placeholder="Password"
           />
         </label>
+        {passwordError && <p className="text-sm text-error">{passwordError}</p>}
         <button onClick={handleSignup} className="btn btn-primary">
           Signup
         </button>

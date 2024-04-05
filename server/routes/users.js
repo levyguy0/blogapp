@@ -14,12 +14,12 @@ router.post(
     [
       body("username")
         .isLength({ min: 4, max: 16 })
-        .withMessage("Must be between 4 and 16 characters long."),
-      body("name").notEmpty(),
-      body("email").isEmail().notEmpty().withMessage("Must be a valid email."),
+        .withMessage("Username must be between 4 and 16 characters long."),
+      body("name").notEmpty().withMessage("Name is required."),
+      body("email").isEmail().withMessage("Must be a valid email."),
       body("password")
         .isLength({ min: 8 })
-        .withMessage("Must be at least 8 characters long."),
+        .withMessage("Password must be at least 8 characters long."),
     ],
   ],
   async (req, res) => {
