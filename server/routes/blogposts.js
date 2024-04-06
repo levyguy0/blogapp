@@ -40,4 +40,32 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
+router.delete("/", auth, async (req, res) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: req.user,
+    },
+  });
+
+  const post = await prisma.blogPost.findUnique({
+    where: {
+      id: req.body.id,
+    },
+  });
+
+  if (post.authorId != user.id) {
+    return res
+      .status(401)
+      .json({ error: "Cannot delete a post you did not upload." });
+  }
+
+  await prisma.blogPost.delete({
+    where: {
+      id: req.body.id,
+    },
+  });
+
+  res.status(200).json({ post: post });
+});
+
 module.exports = router;
