@@ -29,6 +29,7 @@ model BlogPost {
   title String
   description String
   content String
+  category CategoryName
   // categoryIDs String[]   @db.ObjectId
   // categories Category[] @relation(fields: [categoryIDs], references: [id])
 }
@@ -40,12 +41,12 @@ model BlogPost {
 //   blogPosts BlogPost[] @relation(fields: [blogPostIDs], references: [id])
 // }
 
-// enum CategoryName {
-//   TECH
-//   FINANCE
-//   MEDICINE
-//   POLITICS
-//   HISTORY
-//   GEOGRAPHY
-//   ENTERTAINMENT
-// }
+enum CategoryName {
+  TECH
+  FINANCE
+  MEDICINE
+  POLITICS
+  HISTORY
+  GEOGRAPHY
+  ENTERTAINMENT
+}
