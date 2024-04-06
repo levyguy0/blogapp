@@ -10,6 +10,16 @@ router.get("/", auth, async (req, res) => {
   res.json({ posts: posts });
 });
 
+router.get("/:category", auth, async (req, res) => {
+  const posts = await prisma.blogPost.findMany({
+    where: {
+      category: req.params.category,
+    },
+  });
+
+  res.status(200).json({ posts: posts });
+});
+
 router.post("/", auth, async (req, res) => {
   const user = await prisma.user.findUnique({
     where: {

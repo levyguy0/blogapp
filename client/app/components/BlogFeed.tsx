@@ -3,6 +3,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import BlogPost from "../../models/BlogPost";
 
+// TODO: ADD FILTER ON LEFT OF GRID IN HOME PAGE AND ONLY RENDER CERTAIN BLOGS
+
 const BlogFeed = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
 
