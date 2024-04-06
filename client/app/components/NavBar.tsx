@@ -20,7 +20,13 @@ const NavBar = ({ user }: Props) => {
   return (
     <div>
       {!user ? (
-        <div className="navbar bg-base-100 absolute">
+        <div
+          className={`navbar bg-base-100 ${
+            path == "/login" || path == "/signup" || path == "/"
+              ? "absolute"
+              : ""
+          }`}
+        >
           <div className="flex-1">
             <Link
               href={
@@ -45,7 +51,13 @@ const NavBar = ({ user }: Props) => {
           </div>
         </div>
       ) : (
-        <div className="navbar bg-base-100 absolute">
+        <div
+          className={`navbar bg-base-100 ${
+            path == "/login" || path == "/signup" || path == "/"
+              ? "absolute"
+              : ""
+          }`}
+        >
           <div className="flex-1">
             <Link
               href={

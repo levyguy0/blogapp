@@ -29,8 +29,9 @@ const page = () => {
   return (
     <main>
       <NavBar user={user}></NavBar>
-      <div className="flex w-screen h-screen justify-center items-center">
-        <div>hello</div>
+      <div className="grid grid-cols-4 relative border-2 border-primary">
+        <div className="sort col-span-1 border-2">hello</div>
+        <div className="feed col-span-3 border-2">hello</div>
       </div>
     </main>
   );
