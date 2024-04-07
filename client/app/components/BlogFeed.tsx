@@ -27,7 +27,7 @@ const BlogFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
     } else {
       const fetchPosts = async () => {
         await axios
-          .get(`http://localhost:8080/posts/${selectedCategory}`, {
+          .get(`http://localhost:8080/posts/bycategory/${selectedCategory}`, {
             withCredentials: true,
           })
           .then((res: AxiosResponse) => {

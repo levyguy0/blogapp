@@ -10,8 +10,9 @@ router.get("/", auth, async (req, res) => {
   res.json({ posts: posts });
 });
 
-router.get("/:id", auth, async (req, res) => {
-  const post = await prisma.blogPost.findUnique({
+router.get("/byid/:id", auth, async (req, res) => {
+  console.log(req.params);
+  const post = await prisma.blogPost.findFirst({
     where: {
       id: req.params.id,
     },
@@ -20,7 +21,7 @@ router.get("/:id", auth, async (req, res) => {
   res.status(200).json({ post: post });
 });
 
-router.get("/:category", auth, async (req, res) => {
+router.get("/bycategory/:category", auth, async (req, res) => {
   const validCategories = Object.values(CategoryName);
 
   if (!validCategories.includes(req.params.category)) {

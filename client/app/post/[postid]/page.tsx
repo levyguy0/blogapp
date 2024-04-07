@@ -3,15 +3,10 @@ import NavBar from "@/app/components/NavBar";
 import BlogPost from "@/models/BlogPost";
 import ShownUser from "@/models/ShownUser";
 import axios from "axios";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
-interface Props {
-  params: {
-    postid: string;
-  };
-}
-
-const page = ({ params }: Props) => {
+const page = ({ params }: { params: { postid: string } }) => {
   const [user, setUser] = useState<ShownUser | null>();
   const [post, setPost] = useState<BlogPost>();
 
@@ -35,7 +30,7 @@ const page = ({ params }: Props) => {
 
     const getPost = async () => {
       await axios
-        .get(`http://localhost:8080/posts/${params.postid}`, {
+        .get(`http://localhost:8080/posts/byid/${params.postid}`, {
           withCredentials: true,
         })
         .then((res: any) => {
@@ -53,7 +48,9 @@ const page = ({ params }: Props) => {
         <div className="col-span-1 row-span-4 p-4">
           <ul className="menu bg-base-200 rounded-box">
             <li>
-              <button>Back</button>
+              <Link href={"/home"}>
+                <button>Back</button>
+              </Link>
             </li>
           </ul>
         </div>
