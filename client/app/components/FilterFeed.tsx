@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 
 interface Props {
   selectedCategory: string | null;
-  setSelectedCategory: (category: string) => void;
+  setSelectedCategory: (category: string | null) => void;
 }
 
 const FilterFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
@@ -27,9 +27,12 @@ const FilterFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
   return (
     <div className="filter col-span-1">
       <ul className="menu bg-base-200 rounded-box">
+        <li>
+          <button onClick={() => setSelectedCategory(null)}>RECENT</button>
+        </li>
         {categories.map((c) => (
-          <li>
-            <button>{c}</button>
+          <li key={c}>
+            <button onClick={() => setSelectedCategory(c)}>{c}</button>
           </li>
         ))}
       </ul>
