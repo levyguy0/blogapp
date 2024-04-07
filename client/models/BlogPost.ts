@@ -3,6 +3,7 @@ export default interface BlogPost {
   description: string;
   content: string;
   id: string;
+  authorName: string;
   category: string;
   authorId: string;
 }

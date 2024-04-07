@@ -46,6 +46,7 @@ router.post("/", auth, async (req, res) => {
 
   let post = {
     authorId: user.id,
+    authorName: user.username,
     title: req.body.title,
     description: req.body.description,
     content: req.body.content,

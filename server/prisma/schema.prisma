@@ -26,6 +26,7 @@ model BlogPost {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   author User @relation(fields: [authorId], references: [id])
   authorId String @db.ObjectId
+  authorName String
   title String
   description String
   content String
