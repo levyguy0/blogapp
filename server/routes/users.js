@@ -99,7 +99,9 @@ router.get("/me", auth, async (req, res) => {
 
   res
     .status(200)
-    .json({ user: { username: user.username, email: user.email } });
+    .json({
+      user: { id: user.id, username: user.username, email: user.email },
+    });
 });
 
 router.get("/logout", auth, async (req, res) => {

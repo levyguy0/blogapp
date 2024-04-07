@@ -2,8 +2,7 @@
 import axios, { AxiosResponse } from "axios";
 import React, { useEffect, useState } from "react";
 import BlogPost from "../../models/BlogPost";
-
-// TODO: ADD FILTER ON LEFT OF GRID IN HOME PAGE AND ONLY RENDER CERTAIN BLOGS
+import ShownUser from "@/models/ShownUser";
 
 interface Props {
   selectedCategory: string | null;

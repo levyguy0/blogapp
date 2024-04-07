@@ -4,4 +4,5 @@ export default interface BlogPost {
   content: string;
   id: string;
   category: string;
+  authorId: string;
 }
