@@ -11,7 +11,6 @@ router.get("/", auth, async (req, res) => {
 });
 
 router.get("/byid/:id", auth, async (req, res) => {
-  console.log(req.params);
   const post = await prisma.blogPost.findFirst({
     where: {
       id: req.params.id,
