@@ -11,6 +11,12 @@ router.get("/", auth, async (req, res) => {
 });
 
 router.get("/:category", auth, async (req, res) => {
+  const validCategories = Object.values(CategoryName);
+
+  if (!validCategories.includes(req.params.category)) {
+    return res.status(400).json({ error: "Not a valid category" });
+  }
+
   const posts = await prisma.blogPost.findMany({
     where: {
       category: req.params.category,
