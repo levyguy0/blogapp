@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import axios from "axios";
 import ShownUser from "@/models/ShownUser";
+import BlogFeed from "../components/BlogFeed";
 
 const page = () => {
   const [user, setUser] = useState<ShownUser | null>(null);
@@ -29,9 +30,9 @@ const page = () => {
   return (
     <main>
       <NavBar user={user}></NavBar>
-      <div className="grid grid-cols-4 relative border-2 border-primary">
-        <div className="sort col-span-1 border-2">hello</div>
-        <div className="feed col-span-3 border-2">hello</div>
+      <div className="grid grid-cols-4 relative">
+        <div className="sort col-span-1">hello</div>
+        <BlogFeed></BlogFeed>
       </div>
     </main>
   );
