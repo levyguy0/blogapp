@@ -41,6 +41,17 @@ const page = ({ params }: { params: { postid: string } }) => {
     getPost();
   }, []);
 
+  const handleDeletePost = async () => {
+    await axios
+      .delete("http://localhost:8080/posts/", {
+        data: { id: post?.id },
+        withCredentials: true,
+      })
+      .then(() => {
+        location.replace("/home");
+      });
+  };
+
   return (
     <main>
       <NavBar user={user}></NavBar>
@@ -52,6 +63,11 @@ const page = ({ params }: { params: { postid: string } }) => {
                 <button>Back</button>
               </Link>
             </li>
+            {post?.authorId == user?.id && (
+              <li>
+                <button onClick={handleDeletePost}>Delete</button>
+              </li>
+            )}
           </ul>
         </div>
         <div className="col-span-3 row-span-1 p-4 flex flex-col">
