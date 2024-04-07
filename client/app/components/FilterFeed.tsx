@@ -27,13 +27,28 @@ const FilterFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
   return (
     <div className="filter col-span-1">
       <ul className="menu bg-base-200 rounded-box">
-        <li>
-          <button onClick={() => setSelectedCategory(null)}>RECENT</button>
-        </li>
-        {categories.map((c) => (
-          <li key={c}>
-            <button onClick={() => setSelectedCategory(c)}>{c}</button>
+        {!selectedCategory ? (
+          <li className="font-bold">
+            <button onClick={() => setSelectedCategory(null)}>RECENT</button>
           </li>
+        ) : (
+          <li>
+            <button onClick={() => setSelectedCategory(null)}>RECENT</button>
+          </li>
+        )}
+
+        {categories.map((c) => (
+          <div>
+            {c == selectedCategory ? (
+              <li key={c} className="font-bold">
+                <button onClick={() => setSelectedCategory(c)}>{c}</button>
+              </li>
+            ) : (
+              <li key={c}>
+                <button onClick={() => setSelectedCategory(c)}>{c}</button>
+              </li>
+            )}
+          </div>
         ))}
       </ul>
     </div>
