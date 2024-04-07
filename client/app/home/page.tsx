@@ -7,8 +7,8 @@ import BlogFeed from "../components/BlogFeed";
 import FilterFeed from "../components/FilterFeed";
 
 const page = () => {
-  const [user, setUser] = useState<ShownUser | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [user, setUser] = useState<ShownUser | null>();
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   useEffect(() => {
     const checkLoggedIn = async () => {

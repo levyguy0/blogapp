@@ -1,7 +1,7 @@
 import React from "react";
 
 interface Props {
-  selectedCategory: string;
+  selectedCategory: string | null;
   setSelectedCategory: (category: string) => void;
 }
 

@@ -6,7 +6,7 @@ import BlogPost from "../../models/BlogPost";
 // TODO: ADD FILTER ON LEFT OF GRID IN HOME PAGE AND ONLY RENDER CERTAIN BLOGS
 
 interface Props {
-  selectedCategory: string;
+  selectedCategory: string | null;
   setSelectedCategory: (category: string) => void;
 }
 
