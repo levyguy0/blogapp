@@ -5,7 +5,12 @@ import BlogPost from "../../models/BlogPost";
 
 // TODO: ADD FILTER ON LEFT OF GRID IN HOME PAGE AND ONLY RENDER CERTAIN BLOGS
 
-const BlogFeed = () => {
+interface Props {
+  selectedCategory: string;
+  setSelectedCategory: (category: string) => void;
+}
+
+const BlogFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
 
   useEffect(() => {

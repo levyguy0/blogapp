@@ -4,9 +4,11 @@ import NavBar from "../components/NavBar";
 import axios from "axios";
 import ShownUser from "@/models/ShownUser";
 import BlogFeed from "../components/BlogFeed";
+import FilterFeed from "../components/FilterFeed";
 
 const page = () => {
   const [user, setUser] = useState<ShownUser | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
     const checkLoggedIn = async () => {
@@ -31,8 +33,14 @@ const page = () => {
     <main>
       <NavBar user={user}></NavBar>
       <div className="grid grid-cols-4 relative">
-        <div className="sort col-span-1">hello</div>
-        <BlogFeed></BlogFeed>
+        <FilterFeed
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+        ></FilterFeed>
+        <BlogFeed
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+        ></BlogFeed>
       </div>
     </main>
   );
