@@ -1,3 +1,4 @@
+"use client";
 import ShownUser from "@/models/ShownUser";
 import axios from "axios";
 import Link from "next/link";
