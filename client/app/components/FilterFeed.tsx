@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 interface Props {
   selectedCategory: string | null;
@@ -6,9 +8,31 @@ interface Props {
 }
 
 const FilterFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
+  const [categories, setCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      await axios
+        .get("http://localhost:8080/posts/category/all", {
+          withCredentials: true,
+        })
+        .then((res) => {
+          setCategories(res.data.categories);
+        });
+    };
+
+    fetchCategories();
+  }, []);
+
   return (
     <div className="filter col-span-1">
-      <div>filter</div>
+      <ul className="menu bg-base-200 rounded-box">
+        {categories.map((c) => (
+          <li>
+            <button>{c}</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
