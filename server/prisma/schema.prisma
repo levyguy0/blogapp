@@ -27,6 +27,7 @@ model BlogPost {
   author User @relation(fields: [authorId], references: [id])
   authorId String @db.ObjectId
   authorName String
+  createdAt DateTime? @default(now())
   title String
   description String
   content String

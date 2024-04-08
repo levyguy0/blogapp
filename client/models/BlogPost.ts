@@ -6,4 +6,5 @@ export default interface BlogPost {
   authorName: string;
   category: string;
   authorId: string;
+  createdAt: string;
 }

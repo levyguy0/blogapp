@@ -7,6 +7,11 @@ const prisma = new PrismaClient();
 
 router.get("/", auth, async (req, res) => {
   const posts = await prisma.blogPost.findMany();
+  posts.forEach((post) => {
+    const date = new Date(post.createdAt).toLocaleDateString();
+    post.createdAt = date;
+  });
+
   res.json({ posts: posts });
 });
 
@@ -16,6 +21,8 @@ router.get("/byid/:id", auth, async (req, res) => {
       id: req.params.id,
     },
   });
+
+  post.createdAt = new Date(post.createdAt).toLocaleDateString();
 
   res.status(200).json({ post: post });
 });
@@ -31,6 +38,11 @@ router.get("/bycategory/:category", auth, async (req, res) => {
     where: {
       category: req.params.category,
     },
+  });
+
+  posts.forEach((post) => {
+    const date = new Date(post.createdAt).toLocaleDateString();
+    post.createdAt = date;
   });
 
   res.status(200).json({ posts: posts });

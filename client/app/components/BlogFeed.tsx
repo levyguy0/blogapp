@@ -45,9 +45,12 @@ const BlogFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
         {posts.map((p) => (
           <Link href={`/post/${p.id}`}>
             <div className="flex flex-col gap-4 p-4" key={p.id}>
-              <div className="flex gap-2">
-                <span className="badge badge-primary">{p.category}</span>
-                <span className="badge badge-secondary">{p.authorName}</span>
+              <div className="flex gap-2 justify-between">
+                <div className="flex gap-2">
+                  <span className="badge badge-primary">{p.category}</span>
+                  <span className="badge badge-secondary">{p.authorName}</span>
+                </div>
+                <span className="badge badge-info">{p.createdAt}</span>
               </div>
               <div className="flex flex-col gap-2">
                 <h1 className="font-bold">{p.title}</h1>
