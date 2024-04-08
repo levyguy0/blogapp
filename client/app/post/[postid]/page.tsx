@@ -71,10 +71,23 @@ const page = ({ params }: { params: { postid: string } }) => {
           </ul>
         </div>
         <div className="col-span-3 row-span-1 p-4 flex flex-col">
-          <div className="text-5xl font-bold mb-10 text-info">
+          <div className="text-5xl font-bold text-info mb-10">
             {post?.title}
           </div>
-          <div className="text-xl">{post?.description}</div>
+          <div className="flex gap-2 items-center justify-between">
+            <div className="text-xl">{post?.description}</div>
+            <div className="gap-2 flex">
+              <span className="badge badge-primary items-end justify-end">
+                {post?.category}
+              </span>
+              <span className="badge badge-secondary items-end justify-end">
+                {post?.authorName}
+              </span>
+              <span className="badge badge-info items-end justify-end">
+                {post?.createdAt}
+              </span>
+            </div>
+          </div>
           <div className="divider divider-secondary"></div>
         </div>
         <div className="col-span-3 row-span-3 px-4">
