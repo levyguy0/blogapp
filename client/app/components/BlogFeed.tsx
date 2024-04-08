@@ -53,7 +53,7 @@ const BlogFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
                 <span className="badge badge-info">{p.createdAt}</span>
               </div>
               <div className="flex flex-col gap-2">
-                <h1 className="font-bold">{p.title}</h1>
+                <h1 className="font-bold text-lg">{p.title}</h1>
                 <div>{p.description}</div>
               </div>
               <div className="divider divider-info"></div>
