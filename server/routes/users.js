@@ -95,10 +95,27 @@ router.get("/me", auth, async (req, res) => {
     where: {
       id: req.user,
     },
+    include: {
+      posts: true,
+    },
   });
 
+  const userPosts = user.posts.map((post) => ({
+    id: post.id,
+    title: post.title,
+    description: post.description,
+    content: post.content,
+    category: post.category,
+    createdAt: post.createdAt,
+  }));
+
   res.status(200).json({
-    user: { id: user.id, username: user.username, email: user.email },
+    user: {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      posts: userPosts,
+    },
   });
 });
 
