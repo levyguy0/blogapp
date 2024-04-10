@@ -48,7 +48,9 @@ const BlogFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
               <div className="flex gap-2 justify-between">
                 <div className="flex gap-2">
                   <span className="badge badge-primary">{p.category}</span>
-                  <span className="badge badge-secondary">{p.authorName}</span>
+                  <span className="badge badge-secondary hover:underline">
+                    <Link href={`/user/${p.authorName}`}>{p.authorName}</Link>
+                  </span>
                 </div>
                 <span className="badge badge-info">{p.createdAt}</span>
               </div>
