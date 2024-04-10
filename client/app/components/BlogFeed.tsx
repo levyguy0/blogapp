@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import BlogPost from "../../models/BlogPost";
 import ShownUser from "@/models/ShownUser";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface Props {
   selectedCategory: string | null;
@@ -12,6 +13,7 @@ interface Props {
 
 const BlogFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
+  const path = usePathname();
 
   useEffect(() => {
     if (!selectedCategory) {
@@ -43,13 +45,21 @@ const BlogFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
     <div className="feed col-span-3">
       <div>
         {posts.map((p) => (
-          <Link href={`/post/${p.id}`}>
+          <Link
+            onClick={() => localStorage.setItem("lastLink", path)}
+            href={`/post/${p.id}`}
+          >
             <div className="flex flex-col gap-4 p-4" key={p.id}>
               <div className="flex gap-2 justify-between">
                 <div className="flex gap-2">
                   <span className="badge badge-primary">{p.category}</span>
                   <span className="badge badge-secondary hover:underline">
-                    <Link href={`/user/${p.authorName}`}>{p.authorName}</Link>
+                    <Link
+                      onClick={() => localStorage.setItem("lastLink", path)}
+                      href={`/user/${p.authorName}`}
+                    >
+                      {p.authorName}
+                    </Link>
                   </span>
                 </div>
                 <span className="badge badge-info">{p.createdAt}</span>

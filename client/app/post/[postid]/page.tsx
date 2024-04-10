@@ -4,11 +4,13 @@ import BlogPost from "@/models/BlogPost";
 import ShownUser from "@/models/ShownUser";
 import axios from "axios";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const page = ({ params }: { params: { postid: string } }) => {
   const [user, setUser] = useState<ShownUser | null>();
   const [post, setPost] = useState<BlogPost>();
+  const path = usePathname();
 
   useEffect(() => {
     const checkLoggedIn = async () => {
@@ -59,7 +61,7 @@ const page = ({ params }: { params: { postid: string } }) => {
         <div className="col-span-1 row-span-4 p-4">
           <ul className="menu bg-base-200 rounded-box">
             <li>
-              <Link href={"/home"}>
+              <Link href={localStorage.getItem("lastLink") || "/home"}>
                 <button>Back</button>
               </Link>
             </li>
@@ -80,8 +82,13 @@ const page = ({ params }: { params: { postid: string } }) => {
               <span className="badge badge-primary items-end justify-end">
                 {post?.category}
               </span>
-              <span className="badge badge-secondary items-end justify-end">
-                {post?.authorName}
+              <span className="badge badge-secondary items-end justify-end hover:underline">
+                <Link
+                  onClick={() => localStorage.setItem("lastLink", path)}
+                  href={`/user/${post?.authorName}`}
+                >
+                  {post?.authorName}
+                </Link>
               </span>
               <span className="badge badge-info items-end justify-end">
                 {post?.createdAt}

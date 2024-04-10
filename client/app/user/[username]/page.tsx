@@ -4,11 +4,13 @@ import UserProfile from "@/app/components/UserProfile";
 import ShownUser from "@/models/ShownUser";
 import axios from "axios";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const page = ({ params }: { params: { username: string } }) => {
   const [user, setUser] = useState<ShownUser | null>();
   const [viewedUser, setViewedUser] = useState<ShownUser | null>();
+  const path = usePathname();
 
   useEffect(() => {
     const checkLoggedIn = async () => {
@@ -49,7 +51,11 @@ const page = ({ params }: { params: { username: string } }) => {
       <div className="p-4">
         <UserProfile user={viewedUser}></UserProfile>
         {viewedUser?.posts.map((p) => (
-          <Link href={`/post/${p.id}`} className="w-[60%]">
+          <Link
+            onClick={() => localStorage.setItem("lastLink", path)}
+            href={`/post/${p.id}`}
+            className="w-[60%]"
+          >
             <div className="flex flex-col gap-4 p-4" key={p.id}>
               <div className="flex gap-2 justify-between">
                 <div className="flex gap-2">
