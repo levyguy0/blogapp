@@ -4,6 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect } from "react";
+import { TfiWrite } from "react-icons/tfi";
 
 interface Props {
   user?: ShownUser | null;
@@ -72,7 +73,10 @@ const NavBar = ({ user }: Props) => {
             </Link>
           </div>
           <div className="flex justify-end flex-1 px-2">
-            <div className="flex items-stretch">
+            <div className="flex items-center">
+              <Link href={"/write"} className="">
+                <button className="btn btn-ghost">Write</button>
+              </Link>
               <div className="dropdown dropdown-end">
                 <div
                   tabIndex={0}
