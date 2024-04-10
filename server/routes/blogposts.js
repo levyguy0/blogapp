@@ -6,7 +6,11 @@ const router = express.Router();
 const prisma = new PrismaClient();
 
 router.get("/", auth, async (req, res) => {
-  const posts = await prisma.blogPost.findMany();
+  const posts = await prisma.blogPost.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
   posts.forEach((post) => {
     const date = new Date(post.createdAt).toLocaleDateString();
     post.createdAt = date;
@@ -37,6 +41,9 @@ router.get("/bycategory/:category", auth, async (req, res) => {
   const posts = await prisma.blogPost.findMany({
     where: {
       category: req.params.category,
+    },
+    orderBy: {
+      createdAt: "desc",
     },
   });
 
