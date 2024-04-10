@@ -95,28 +95,55 @@ router.get("/me", auth, async (req, res) => {
     where: {
       id: req.user,
     },
-    include: {
-      posts: true,
-    },
   });
-
-  const userPosts = user.posts.map((post) => ({
-    id: post.id,
-    title: post.title,
-    description: post.description,
-    content: post.content,
-    category: post.category,
-    createdAt: post.createdAt,
-  }));
 
   res.status(200).json({
     user: {
       id: user.id,
       username: user.username,
       email: user.email,
-      posts: userPosts,
     },
   });
+});
+
+router.get("/byusername/:username", auth, async (req, res) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      username: req.params.username,
+    },
+    include: {
+      posts: true,
+    },
+  });
+  if (user) {
+    if (user.posts && user.posts.length > 0) {
+      user.posts.forEach((post) => {
+        const date = new Date(post.createdAt).toLocaleDateString();
+        post.createdAt = date;
+      });
+
+      const userPosts = user.posts.map((post) => ({
+        id: post.id,
+        title: post.title,
+        description: post.description,
+        content: post.content,
+        category: post.category,
+        createdAt: post.createdAt,
+        authorName: post.authorName,
+      }));
+
+      res.status(200).json({
+        user: {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          posts: userPosts,
+        },
+      });
+    } else {
+      res.status(400).send("User has not posted");
+    }
+  }
 });
 
 router.get("/logout", auth, async (req, res) => {
