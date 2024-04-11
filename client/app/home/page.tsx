@@ -5,6 +5,7 @@ import axios from "axios";
 import ShownUser from "@/models/ShownUser";
 import BlogFeed from "../components/BlogFeed";
 import FilterFeed from "../components/FilterFeed";
+import baseURL from "../utils/BaseURL";
 
 const page = () => {
   const [user, setUser] = useState<ShownUser | null>();
@@ -13,7 +14,7 @@ const page = () => {
   useEffect(() => {
     const checkLoggedIn = async () => {
       await axios
-        .get("http://localhost:8080/users/me", { withCredentials: true })
+        .get(`http://localhost:8080/users/me`, { withCredentials: true })
         .then((res) => {
           if (res.data.user) {
             setUser(res.data.user);
