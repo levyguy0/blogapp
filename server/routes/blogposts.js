@@ -5,6 +5,11 @@ const auth = require("../middleware/auth");
 const router = express.Router();
 const prisma = new PrismaClient();
 
+// const ExpressRedisCache = require("express-redis-cache");
+// const cache = ExpressRedisCache({
+//   expire: 10,
+// });
+
 router.get("/", auth, async (req, res) => {
   const posts = await prisma.blogPost.findMany({
     orderBy: {
