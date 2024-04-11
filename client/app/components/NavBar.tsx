@@ -4,7 +4,6 @@ import axios from "axios";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect } from "react";
-import { TfiWrite } from "react-icons/tfi";
 
 interface Props {
   user?: ShownUser | null;
@@ -42,12 +41,16 @@ const NavBar = ({ user }: Props) => {
             </Link>
           </div>
           <div className="flex-none">
-            <ul className="menu menu-horizontal px-1">
+            <ul className="flex px-2">
               <li>
-                <Link href="/login">Login</Link>
+                <Link href="/login">
+                  <button className="btn btn-ghost">Login</button>
+                </Link>
               </li>
               <li>
-                <Link href="/signup">Signup</Link>
+                <Link href="/signup">
+                  <button className="btn btn-ghost">Signup</button>
+                </Link>
               </li>
             </ul>
           </div>
