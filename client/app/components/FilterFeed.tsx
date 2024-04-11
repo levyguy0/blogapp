@@ -38,7 +38,7 @@ const FilterFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
         )}
 
         {categories.map((c) => (
-          <div>
+          <div key={c}>
             {c == selectedCategory ? (
               <li key={c} className="font-bold">
                 <button onClick={() => setSelectedCategory(c)}>{c}</button>

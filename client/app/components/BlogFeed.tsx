@@ -45,32 +45,36 @@ const BlogFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
     <div className="feed col-span-3">
       <div>
         {posts.map((p) => (
-          <Link
-            onClick={() => localStorage.setItem("lastLink", path)}
-            href={`/post/${p.id}`}
-          >
-            <div className="flex flex-col gap-4 p-4" key={p.id}>
-              <div className="flex gap-2 justify-between">
-                <div className="flex gap-2">
-                  <span className="badge badge-primary">{p.category}</span>
-                  <span className="badge badge-secondary hover:underline">
-                    <Link
-                      onClick={() => localStorage.setItem("lastLink", path)}
-                      href={`/user/${p.authorName}`}
-                    >
-                      {p.authorName}
-                    </Link>
-                  </span>
-                </div>
-                <span className="badge badge-info">{p.createdAt}</span>
+          <div className="flex flex-col gap-4 p-4" key={p.id}>
+            <div className="flex gap-2 justify-between">
+              <div className="flex gap-2">
+                <span className="badge badge-primary">{p.category}</span>
+                <span className="badge badge-secondary hover:underline">
+                  <Link
+                    onClick={() => localStorage.setItem("lastLink", path)}
+                    href={`/user/${p.authorName}`}
+                  >
+                    {p.authorName}
+                  </Link>
+                </span>
               </div>
-              <div className="flex flex-col gap-2">
-                <h1 className="font-bold text-lg">{p.title}</h1>
-                <div>{p.description}</div>
-              </div>
-              <div className="divider divider-info"></div>
+              <span className="badge badge-info">{p.createdAt}</span>
             </div>
-          </Link>
+            <div className="flex flex-col gap-2">
+              <h1 className="font-bold text-lg">
+                <Link
+                  className=" hover:underline"
+                  key={p.id}
+                  onClick={() => localStorage.setItem("lastLink", path)}
+                  href={`/post/${p.id}`}
+                >
+                  {p.title}
+                </Link>
+              </h1>
+              <div>{p.description}</div>
+            </div>
+            <div className="divider divider-info"></div>
+          </div>
         ))}
       </div>
     </div>

@@ -51,28 +51,31 @@ const page = ({ params }: { params: { username: string } }) => {
       <div className="p-4">
         <UserProfile user={viewedUser}></UserProfile>
         {viewedUser?.posts.map((p) => (
-          <Link
-            onClick={() => localStorage.setItem("lastLink", path)}
-            href={`/post/${p.id}`}
-            className="w-[60%]"
-          >
-            <div className="flex flex-col gap-4 p-4" key={p.id}>
-              <div className="flex gap-2 justify-between">
-                <div className="flex gap-2">
-                  <span className="badge badge-primary">{p.category}</span>
-                  <span className="badge badge-secondary">
-                    <div>{p.authorName}</div>
-                  </span>
-                </div>
-                <span className="badge badge-info">{p.createdAt}</span>
+          <div className="flex flex-col gap-4 p-4" key={p.id}>
+            <div className="flex gap-2 justify-between">
+              <div className="flex gap-2">
+                <span className="badge badge-primary">{p.category}</span>
+                <span className="badge badge-secondary">
+                  <div>{p.authorName}</div>
+                </span>
               </div>
-              <div className="flex flex-col gap-2">
-                <h1 className="font-bold text-lg">{p.title}</h1>
-                <div>{p.description}</div>
-              </div>
-              <div className="divider divider-info"></div>
+              <span className="badge badge-info">{p.createdAt}</span>
             </div>
-          </Link>
+            <div className="flex flex-col gap-2">
+              <h1 className="font-bold text-lg">
+                <Link
+                  key={p.id}
+                  onClick={() => localStorage.setItem("lastLink", path)}
+                  href={`/post/${p.id}`}
+                  className="w-[60%] hover:underline"
+                >
+                  {p.title}{" "}
+                </Link>
+              </h1>
+              <div>{p.description}</div>
+            </div>
+            <div className="divider divider-info"></div>
+          </div>
         ))}
       </div>
     </main>
