@@ -1,11 +1,14 @@
 "use client";
 import ShownUser from "@/models/ShownUser";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import NavBar from "../components/NavBar";
 
 const page = () => {
   const [user, setUser] = useState<ShownUser | null>();
+  const titleRef = useRef<HTMLTextAreaElement>(null);
+  const descRef = useRef<HTMLTextAreaElement>(null);
+
   useEffect(() => {
     const checkLoggedIn = async () => {
       await axios
@@ -28,7 +31,19 @@ const page = () => {
   return (
     <main>
       <NavBar user={user}></NavBar>
-      <div>page</div>
+      <div className="p-4 flex flex-col gap-4 w-[80%]">
+        <h1>Create a Blog Post</h1>
+        <textarea
+          ref={titleRef}
+          className="textarea textarea-bordered"
+          placeholder="Title"
+        ></textarea>
+        <textarea
+          ref={descRef}
+          className="textarea textarea-bordered"
+          placeholder="Description"
+        ></textarea>
+      </div>
     </main>
   );
 };
