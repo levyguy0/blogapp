@@ -1,6 +1,7 @@
 const express = require("express");
 const { PrismaClient, CategoryName } = require("@prisma/client");
 const auth = require("../middleware/auth");
+const { body } = require("express-validator");
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -65,36 +66,57 @@ router.get("/category/all", auth, async (req, res) => {
   res.json({ categories: categories });
 });
 
-router.post("/", auth, async (req, res) => {
-  const user = await prisma.user.findUnique({
-    where: {
-      id: req.user,
-    },
-  });
+router.post(
+  "/",
+  auth,
+  [
+    [
+      body("title")
+        .notEmpty()
+        .isLength({ max: 60 })
+        .withMessage(
+          "Title is required and must be no longer than 60 characters."
+        ),
+      body("description")
+        .notEmpty()
+        .isLength({ max: 120 })
+        .withMessage(
+          "Description is required and must be no longer than 120 characters."
+        ),
+      body("content").notEmpty().withMessage("Content is required."),
+    ],
+  ],
+  async (req, res) => {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: req.user,
+      },
+    });
 
-  const validCategories = Object.values(CategoryName);
+    const validCategories = Object.values(CategoryName);
 
-  if (!validCategories.includes(req.body.category)) {
-    return res.status(400).json({ error: "Invalid category" });
+    if (!validCategories.includes(req.body.category)) {
+      return res.status(400).json({ error: "Invalid category" });
+    }
+
+    let post = {
+      authorId: user.id,
+      authorName: user.username,
+      title: req.body.title,
+      description: req.body.description,
+      content: req.body.content,
+      category: req.body.category,
+    };
+
+    try {
+      post = await prisma.blogPost.create({ data: post });
+      res.json({ post: post });
+    } catch (error) {
+      console.error("Error creating blog post:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
   }
-
-  let post = {
-    authorId: user.id,
-    authorName: user.username,
-    title: req.body.title,
-    description: req.body.description,
-    content: req.body.content,
-    category: req.body.category,
-  };
-
-  try {
-    post = await prisma.blogPost.create({ data: post });
-    res.json({ post: post });
-  } catch (error) {
-    console.error("Error creating blog post:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
+);
 
 router.delete("/", auth, async (req, res) => {
   const user = await prisma.user.findUnique({
