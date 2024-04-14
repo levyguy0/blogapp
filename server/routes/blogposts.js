@@ -1,7 +1,7 @@
 const express = require("express");
 const { PrismaClient, CategoryName } = require("@prisma/client");
 const auth = require("../middleware/auth");
-const { body } = require("express-validator");
+const { body, validationResult } = require("express-validator");
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -73,12 +73,12 @@ router.post(
     [
       body("title")
         .notEmpty()
+        .withMessage("Title is required.")
         .isLength({ max: 60 })
-        .withMessage(
-          "Title is required and must be no longer than 60 characters."
-        ),
+        .withMessage("Title must be no longer than 60 characters."),
       body("description")
         .notEmpty()
+        .withMessage("Description is required.")
         .isLength({ max: 120 })
         .withMessage(
           "Description is required and must be no longer than 120 characters."
@@ -87,6 +87,12 @@ router.post(
     ],
   ],
   async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ error: errors.array() });
+    }
+
     const user = await prisma.user.findUnique({
       where: {
         id: req.user,

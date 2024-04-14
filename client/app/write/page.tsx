@@ -4,11 +4,17 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import NavBar from "../components/NavBar";
 
+interface FieldError {
+  msg: string;
+  path: string;
+}
+
 const page = () => {
   const [user, setUser] = useState<ShownUser | null>();
   const [categoryError, setCategoryError] = useState("");
   const [titleError, setTitleError] = useState("");
   const [descError, setDescError] = useState("");
+  const [contentError, setContentError] = useState("");
   const [categories, setCategories] = useState<string[]>([]);
   const titleRef = useRef<HTMLTextAreaElement>(null);
   const descRef = useRef<HTMLTextAreaElement>(null);
@@ -52,8 +58,6 @@ const page = () => {
     const content = contentRef.current?.value;
     const category = selectRef.current?.value;
 
-    console.log(title == "");
-
     if (category == "Category") {
       setCategoryError("Must select a category.");
       return;
@@ -72,6 +76,19 @@ const page = () => {
       .post("http://localhost:8080/posts/", post, { withCredentials: true })
       .then(() => {
         location.replace("/home");
+      })
+      .catch((error) => {
+        error.response.data.error.forEach((err: FieldError) => {
+          switch (err.path) {
+            case "title":
+              setTitleError(err.msg);
+            case "description":
+              setDescError(err.msg);
+            case "content":
+              setContentError(err.msg);
+          }
+        });
+        scrollTo({ top: 0, behavior: "smooth" });
       });
   };
 
@@ -81,22 +98,31 @@ const page = () => {
       <div className="p-10 flex flex-col gap-8">
         <h1 className="font-bold text-3xl text-info">Create a Blog Post</h1>
         <div className="grid grid-rows-8 gap-4">
-          <textarea
-            ref={titleRef}
-            className="textarea textarea-bordered w-full"
-            placeholder="Title"
-          ></textarea>
-          <textarea
-            ref={descRef}
-            className="textarea textarea-bordered w-full"
-            placeholder="Description"
-          ></textarea>
-          <textarea
-            ref={contentRef}
-            className="textarea textarea-bordered row-span-5"
-            placeholder="Content"
-          ></textarea>
-          <div className="flex flex-col">
+          <div className=" row-span-1 grid grid-rows-6 gap-2">
+            <textarea
+              ref={titleRef}
+              className="textarea textarea-bordered w-full row-span-5"
+              placeholder="Title"
+            ></textarea>
+            <p className="text-error text-sm row-span-1">{titleError}</p>
+          </div>
+          <div className=" row-span-2 grid grid-rows-6 gap-2">
+            <textarea
+              ref={descRef}
+              className="textarea textarea-bordered w-full row-span-5"
+              placeholder="Description"
+            ></textarea>
+            <p className="text-error text-sm row-span-1">{descError}</p>
+          </div>
+          <div className="gap-2 row-span-5 grid grid-rows-6">
+            <textarea
+              ref={contentRef}
+              className="textarea textarea-bordered w-full  row-span-5"
+              placeholder="Content"
+            ></textarea>
+            <p className="text-error text-sm row-span-1">{contentError}</p>
+          </div>
+          <div className="flex flex-col gap-2">
             <select
               defaultValue={"Category"}
               className="select select-bordered w-full max-w-xs"
