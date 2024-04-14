@@ -53,6 +53,10 @@ const page = () => {
   }, []);
 
   const handleUpload = async () => {
+    setDescError("");
+    setTitleError("");
+    setContentError("");
+
     const title = titleRef.current?.value;
     const desc = descRef.current?.value;
     const content = contentRef.current?.value;
@@ -82,10 +86,13 @@ const page = () => {
           switch (err.path) {
             case "title":
               setTitleError(err.msg);
+              break;
             case "description":
               setDescError(err.msg);
+              break;
             case "content":
               setContentError(err.msg);
+              break;
           }
         });
         scrollTo({ top: 0, behavior: "smooth" });
