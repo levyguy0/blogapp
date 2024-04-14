@@ -7,6 +7,8 @@ import NavBar from "../components/NavBar";
 const page = () => {
   const [user, setUser] = useState<ShownUser | null>();
   const [categoryError, setCategoryError] = useState("");
+  const [titleError, setTitleError] = useState("");
+  const [descError, setDescError] = useState("");
   const [categories, setCategories] = useState<string[]>([]);
   const titleRef = useRef<HTMLTextAreaElement>(null);
   const descRef = useRef<HTMLTextAreaElement>(null);
@@ -50,10 +52,13 @@ const page = () => {
     const content = contentRef.current?.value;
     const category = selectRef.current?.value;
 
+    console.log(title == "");
+
     if (category == "Category") {
       setCategoryError("Must select a category.");
       return;
     }
+
     setCategoryError("");
 
     const post = {
@@ -78,12 +83,12 @@ const page = () => {
         <div className="grid grid-rows-8 gap-4">
           <textarea
             ref={titleRef}
-            className="textarea textarea-bordered row-span-1"
+            className="textarea textarea-bordered w-full"
             placeholder="Title"
           ></textarea>
           <textarea
             ref={descRef}
-            className="textarea textarea-bordered row-span-2"
+            className="textarea textarea-bordered w-full"
             placeholder="Description"
           ></textarea>
           <textarea
@@ -102,7 +107,7 @@ const page = () => {
                 <option key={c}>{c}</option>
               ))}
             </select>
-            <div className="text-error text-sm my-4">{categoryError}</div>
+            <div className="text-error text-sm">{categoryError}</div>
           </div>
           <button className="btn" onClick={handleUpload}>
             Upload

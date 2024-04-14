@@ -73,7 +73,7 @@ const page = ({ params }: { params: { postid: string } }) => {
           </ul>
         </div>
         <div className="col-span-3 row-span-1 p-4 flex flex-col">
-          <div className="text-5xl font-bold text-info mb-10">
+          <div className="text-5xl font-bold text-info mb-10 whitespace-normal">
             {post?.title}
           </div>
           <div className="flex gap-2 items-center justify-between">
