@@ -102,6 +102,8 @@ router.get("/me", auth, async (req, res) => {
       id: user.id,
       username: user.username,
       email: user.email,
+      following: user.followingIDs,
+      followedBy: user.followedByIDs,
     },
   });
 });
@@ -115,6 +117,7 @@ router.get("/byusername/:username", auth, async (req, res) => {
       posts: true,
     },
   });
+
   if (user) {
     if (user.posts && user.posts.length > 0) {
       user.posts.forEach((post) => {
@@ -136,7 +139,6 @@ router.get("/byusername/:username", auth, async (req, res) => {
         user: {
           id: user.id,
           username: user.username,
-          email: user.email,
           posts: userPosts,
         },
       });
