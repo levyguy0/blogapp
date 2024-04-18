@@ -137,6 +137,10 @@ router.delete("/", auth, async (req, res) => {
     },
   });
 
+  if (!post) {
+    return res.status(400).json({ error: `No post with id ${req.body.id}` });
+  }
+
   if (post.authorId != user.id) {
     return res
       .status(401)

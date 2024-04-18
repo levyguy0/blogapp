@@ -102,8 +102,6 @@ router.get("/me", auth, async (req, res) => {
       id: user.id,
       username: user.username,
       email: user.email,
-      following: user.followingIDs,
-      followedBy: user.followedByIDs,
     },
   });
 });
