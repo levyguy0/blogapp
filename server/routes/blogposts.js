@@ -31,6 +31,9 @@ router.get("/byid/:id", auth, async (req, res) => {
   });
 
   post.createdAt = new Date(post.createdAt).toLocaleDateString();
+  post.comments.forEach((c) => {
+    c.createdAt = new Date(post.createdAt).toLocaleDateString();
+  });
 
   res.status(200).json({ post: post });
 });

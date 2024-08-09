@@ -80,17 +80,15 @@ const page = ({ params }: { params: { postid: string } }) => {
           <div className="flex gap-2 items-center justify-between">
             <div className="text-xl">{post?.description}</div>
             <div className="gap-2 flex">
-              <span className="badge badge-primary items-end justify-end">
-                {post?.category}
-              </span>
               <span className="badge badge-secondary items-end justify-end hover:underline">
-                <Link
-                  onClick={() => localStorage.setItem("lastLink", path)}
-                  href={`/user/${post?.authorName}`}
-                >
+                <Link href={`/user/${post?.authorName}`}>
                   {post?.authorName}
                 </Link>
               </span>
+              <span className="badge badge-primary items-end justify-end">
+                {post?.category}
+              </span>
+
               <span className="badge badge-info items-end justify-end">
                 {post?.createdAt}
               </span>

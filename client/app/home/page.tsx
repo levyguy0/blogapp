@@ -5,7 +5,6 @@ import axios from "axios";
 import ShownUser from "@/models/ShownUser";
 import BlogFeed from "../components/BlogFeed";
 import FilterFeed from "../components/FilterFeed";
-import baseURL from "../utils/BaseURL";
 
 const page = () => {
   const [user, setUser] = useState<ShownUser | null>();
