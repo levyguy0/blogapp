@@ -1,5 +1,5 @@
 "use client";
-
+//TODO DISPLAY COMMENTS
 import BlogPost from "@/models/BlogPost";
 import axios from "axios";
 import React, { useRef, useState } from "react";
@@ -20,6 +20,7 @@ const CommentBar = ({ post }: Props) => {
       setErrorTextarea("Comment must be between 0 and 500 characters long");
       return;
     }
+    setErrorTextarea("");
 
     const res = await axios
       .post(
@@ -33,7 +34,7 @@ const CommentBar = ({ post }: Props) => {
   };
 
   return (
-    <div className="comment_bar row-span-1 col-span-3 relative">
+    <div className="comment_bar row-span-2 col-span-3 relative">
       <div className="flex flex-col gap-4">
         <div className="flex gap-2">
           <textarea
