@@ -1,0 +1,73 @@
+"use client";
+
+import BlogPost from "@/models/BlogPost";
+import axios from "axios";
+import React, { useRef, useState } from "react";
+
+interface Props {
+  post?: BlogPost;
+}
+
+const CommentBar = ({ post }: Props) => {
+  const [errorTextarea, setErrorTextarea] = useState("");
+  const [success, setSuccess] = useState("");
+  const commentContent = useRef<HTMLTextAreaElement>(null);
+
+  const sendComment = async () => {
+    let content = commentContent?.current?.value;
+
+    if (!content || content.length > 500) {
+      setErrorTextarea("Comment must be between 0 and 500 characters long");
+      return;
+    }
+
+    const res = await axios
+      .post(
+        "http://localhost:8080/posts/comment",
+        { content: content, blogID: post?.id },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        setSuccess(res.data["success"]);
+      });
+  };
+
+  return (
+    <div className="comment_bar row-span-1 col-span-3 relative">
+      <div className="flex flex-col gap-4">
+        <div className="flex gap-2">
+          <textarea
+            ref={commentContent}
+            className={`textarea-sm textarea textarea-bordered flex-grow ${
+              errorTextarea && "textarea-error"
+            } ${success && "textarea-success"}`}
+            placeholder="Leave a comment"
+          ></textarea>
+          <button className="btn btn-square" onClick={sendComment}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              className="lucide lucide-send-horizontal"
+            >
+              <path d="m3 3 3 9-3 9 19-9Z" />
+              <path d="M6 12h16" />
+            </svg>
+          </button>
+        </div>
+        {errorTextarea && (
+          <div className="text-error text-sm">{errorTextarea}</div>
+        )}
+        {success && <div className="text-success text-sm">{success}</div>}
+      </div>
+    </div>
+  );
+};
+
+export default CommentBar;

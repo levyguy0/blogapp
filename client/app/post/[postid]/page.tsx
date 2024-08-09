@@ -1,4 +1,5 @@
 "use client";
+import CommentBar from "@/app/components/CommentBar";
 import NavBar from "@/app/components/NavBar";
 import BlogPost from "@/models/BlogPost";
 import ShownUser from "@/models/ShownUser";
@@ -57,8 +58,8 @@ const page = ({ params }: { params: { postid: string } }) => {
   return (
     <main>
       <NavBar user={user}></NavBar>
-      <div className="grid grid-cols-4 grid-rows-4 p-4">
-        <div className="col-span-1 row-span-4 p-4">
+      <div className="grid grid-cols-4 grid-rows-8 p-4">
+        <div className="col-span-1 row-span-8 p-4">
           <ul className="menu bg-base-200 rounded-box">
             <li>
               <Link href={localStorage.getItem("lastLink") || "/home"}>
@@ -72,7 +73,7 @@ const page = ({ params }: { params: { postid: string } }) => {
             )}
           </ul>
         </div>
-        <div className="col-span-3 row-span-1 p-4 flex flex-col">
+        <div className="col-span-3 row-span-2 p-4 flex flex-col">
           <div className="text-5xl font-bold text-info mb-10 whitespace-normal">
             {post?.title}
           </div>
@@ -97,9 +98,10 @@ const page = ({ params }: { params: { postid: string } }) => {
           </div>
           <div className="divider divider-secondary"></div>
         </div>
-        <div className="col-span-3 row-span-3 px-4">
+        <div className="col-span-3 row-span-4 px-4">
           <div className="text-md">{post?.content}</div>
         </div>
+        <CommentBar post={post}></CommentBar>
       </div>
     </main>
   );
