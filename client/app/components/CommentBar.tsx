@@ -36,32 +36,19 @@ const CommentBar = ({ post }: Props) => {
   return (
     <div className="comment_bar row-span-2 col-span-3 relative">
       <div className="flex flex-col gap-4">
-        <div className="flex gap-2">
-          <textarea
-            ref={commentContent}
-            className={`textarea-sm textarea textarea-bordered flex-grow ${
-              errorTextarea && "textarea-error"
-            } ${success && "textarea-success"}`}
-            placeholder="Leave a comment"
-          ></textarea>
-          <button className="btn btn-square" onClick={sendComment}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="lucide lucide-send-horizontal"
-            >
-              <path d="m3 3 3 9-3 9 19-9Z" />
-              <path d="M6 12h16" />
-            </svg>
-          </button>
-        </div>
+        <textarea
+          ref={commentContent}
+          className={`textarea-sm textarea textarea-bordered flex-grow ${
+            errorTextarea && "textarea-error"
+          } ${success && "textarea-success"}`}
+          placeholder="Leave a comment"
+        ></textarea>
+        <button
+          className="btn btn-square flex-grow w-full btn-primary"
+          onClick={sendComment}
+        >
+          Post
+        </button>
         {errorTextarea && (
           <div className="text-error text-sm">{errorTextarea}</div>
         )}
