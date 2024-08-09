@@ -30,6 +30,7 @@ const CommentBar = ({ post }: Props) => {
       )
       .then((res) => {
         setSuccess(res.data["success"]);
+        location.reload();
       });
   };
 
