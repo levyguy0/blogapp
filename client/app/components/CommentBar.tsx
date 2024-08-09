@@ -15,7 +15,6 @@ const CommentBar = ({ post }: Props) => {
 
   const sendComment = async () => {
     let content = commentContent?.current?.value;
-
     if (!content || content.length > 500) {
       setErrorTextarea("Comment must be between 0 and 500 characters long");
       return;

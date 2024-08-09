@@ -7,13 +7,14 @@ import ShownUser from "@/models/ShownUser";
 import axios from "axios";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const page = ({ params }: { params: { postid: string } }) => {
   const [user, setUser] = useState<ShownUser | null>();
   const [post, setPost] = useState<BlogPost>();
   const path = usePathname();
-
+  const router = useRouter();
   useEffect(() => {
     const checkLoggedIn = async () => {
       await axios
@@ -63,9 +64,7 @@ const page = ({ params }: { params: { postid: string } }) => {
         <div className="flex flex-col p-4 w-[20%]">
           <ul className="menu bg-base-200 rounded-box">
             <li>
-              <Link href={localStorage.getItem("lastLink") || "/home"}>
-                <button>Back</button>
-              </Link>
+              <button onClick={() => router.back()}>Back</button>
             </li>
             {post?.authorId == user?.id && (
               <li>
