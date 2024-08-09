@@ -14,34 +14,36 @@ datasource db {
 }
 
 model User {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  email   String   @unique
-  name    String
-  username String @unique
+  id       String     @id @default(auto()) @map("_id") @db.ObjectId
+  email    String     @unique
+  name     String
+  username String     @unique
   password String
-  posts BlogPost[]
+  posts    BlogPost[]
 }
 
 model BlogPost {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  author User @relation(fields: [authorId], references: [id])
-  authorId String @db.ObjectId
-  authorName String
-  createdAt DateTime? @default(now())
-  title String
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  author      User         @relation(fields: [authorId], references: [id])
+  authorId    String       @db.ObjectId
+  authorName  String
+  createdAt   DateTime?    @default(now())
+  title       String
   description String
-  content String
-  category CategoryName
-  // categoryIDs String[]   @db.ObjectId
-  // categories Category[] @relation(fields: [categoryIDs], references: [id])
+  content     String
+  category    CategoryName
+  comments    Comment[]
 }
 
-// model Category {
-//   id String @id @default(auto()) @map("_id") @db.ObjectId
-//   name CategoryName
-//   blogPostIDs String[] @db.ObjectId
-//   blogPosts BlogPost[] @relation(fields: [blogPostIDs], references: [id])
-// }
+model Comment {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  authorId   String    @db.ObjectId
+  authorName String
+  createdAt  DateTime? @default(now())
+  content    String
+  BlogPost   BlogPost? @relation(fields: [blogPostId], references: [id])
+  blogPostId String?   @db.ObjectId
+}
 
 enum CategoryName {
   TECH
