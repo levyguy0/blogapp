@@ -30,6 +30,9 @@ router.get("/byid/:id", auth, async (req, res) => {
     where: {
       id: req.params.id,
     },
+    include: {
+      comments: true,
+    },
   });
 
   post.createdAt = new Date(post.createdAt).toLocaleDateString();
@@ -50,6 +53,9 @@ router.get("/bycategory/:category", auth, async (req, res) => {
     },
     orderBy: {
       createdAt: "desc",
+    },
+    include: {
+      comments: true,
     },
   });
 
@@ -154,6 +160,34 @@ router.delete("/", auth, async (req, res) => {
   });
 
   res.status(200).json({ post: post });
+});
+
+router.post("/comment", auth, async (req, res) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: req.user,
+    },
+  });
+
+  newComment = {
+    authorId: user.id,
+    authorName: user.username,
+    content: req.body.content,
+    blogPostId: req.body.blogID,
+  };
+
+  const post = await prisma.blogPost.findUnique({
+    where: { id: req.body.blogID },
+    include: { comments: true },
+  });
+
+  if (!post) {
+    res.status(400).json({ error: "No post found with this ID" });
+  }
+
+  newComment = await prisma.comment.create({ data: newComment });
+
+  res.status(200).json({ success: "Added comment" });
 });
 
 module.exports = router;
