@@ -7,4 +7,5 @@ export default interface BlogPost {
   category: string;
   authorId: string;
   createdAt: string;
+  comments: Comment[];
 }
