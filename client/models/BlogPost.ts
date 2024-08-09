@@ -1,3 +1,5 @@
+import Comment from "@/models/Comment";
+
 export default interface BlogPost {
   title: string;
   description: string;
