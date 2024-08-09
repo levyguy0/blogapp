@@ -1,5 +1,5 @@
 "use client";
-//TODO DISPLAY COMMENTS
+
 import BlogPost from "@/models/BlogPost";
 import axios from "axios";
 import React, { useRef, useState } from "react";

@@ -30,9 +30,11 @@ router.get("/byid/:id", auth, async (req, res) => {
     },
   });
 
+  post.comments.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
   post.createdAt = new Date(post.createdAt).toLocaleDateString();
   post.comments.forEach((c) => {
-    c.createdAt = new Date(post.createdAt).toLocaleDateString();
+    c.createdAt = new Date(c.createdAt).toLocaleDateString();
   });
 
   res.status(200).json({ post: post });
