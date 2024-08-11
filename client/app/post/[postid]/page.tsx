@@ -64,7 +64,7 @@ const page = ({ params }: { params: { postid: string } }) => {
     <main>
       <NavBar user={user}></NavBar>
       <div className="flex p-4">
-        <div className="flex flex-col p-4 w-[20%]">
+        <div className="flex-col p-4 w-[20%] hidden lg:flex">
           <ul className="menu bg-base-200 rounded-box">
             <li>
               <button onClick={() => router.back()}>Back</button>
@@ -76,28 +76,30 @@ const page = ({ params }: { params: { postid: string } }) => {
             )}
           </ul>
         </div>
-        <div className=" p-4 flex flex-col w-[80%]">
-          <div className="text-5xl font-bold text-info mb-10 whitespace-normal">
-            {post?.title}
+        <div className=" p-4 flex flex-col w-full lg:w-[80%]">
+          <div>
+            <div className="text-3xl lg:text-5xl font-bold text-info mb-2 lg:mb-10 ">
+              {post?.title}
+            </div>
           </div>
-          <div className="flex gap-2 items-center justify-between">
-            <div className="text-xl">{post?.description}</div>
+          <div className="flex flex-col lg:flex-row gap-2 justify-between">
+            <div className="text-md lg:text-xl mb-2">{post?.description}</div>
             <div className="gap-2 flex">
-              <span className="badge badge-secondary items-end justify-end hover:underline">
+              <span className="badge badge-sm lg:badge-md badge-secondary items-end justify-end hover:underline">
                 <Link href={`/user/${post?.authorName}`}>
                   {post?.authorName}
                 </Link>
               </span>
-              <span className="badge badge-primary items-end justify-end">
+              <span className="badge badge-sm lg:badge-md badge-primary items-end justify-end">
                 {post?.category}
               </span>
 
-              <span className="badge badge-info items-end justify-end">
+              <span className="badge badge-sm lg:badge-md badge-info items-end justify-end">
                 {post?.createdAt
                   ? updateDate(post?.createdAt)[0]
                   : post?.createdAt}
               </span>
-              <span className="badge badge-info items-end justify-end">
+              <span className="badge badge-sm lg:badge-md badge-info items-end justify-end">
                 {post?.createdAt
                   ? updateDate(post?.createdAt)[1]
                   : post?.createdAt}

@@ -47,13 +47,15 @@ const BlogFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
           <div className="flex flex-col gap-4 p-4" key={p.id}>
             <div className="flex gap-2 justify-between">
               <div className="flex gap-2">
-                <span className="badge badge-primary">{p.category}</span>
-                <span className="badge badge-secondary hover:underline">
+                <span className="badge badge-sm lg:badge-md badge-primary">
+                  {p.category}
+                </span>
+                <span className="badge badge-sm lg:badge-md badge-secondary hover:underline">
                   <Link href={`/user/${p.authorName}`}>{p.authorName}</Link>
                 </span>
               </div>
               <div className="flex gap-2">
-                <span className="badge badge-info">
+                <span className="badge badge-info badge-sm lg:badge-md">
                   {updateDate(p.createdAt)[0]}
                 </span>
                 <span className="hidden lg:block badge badge-info">
@@ -62,7 +64,7 @@ const BlogFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
               </div>
             </div>
             <div className="flex flex-col gap-2">
-              <h1 className="font-bold text-lg">
+              <h1 className="font-bold text-md lg:text-lg">
                 <Link
                   className=" hover:underline"
                   key={p.id}
@@ -71,7 +73,7 @@ const BlogFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
                   {p.title}
                 </Link>
               </h1>
-              <div>{p.description}</div>
+              <div className="text-sm lg:text-md">{p.description}</div>
             </div>
             <div className="divider divider-info"></div>
           </div>
