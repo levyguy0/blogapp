@@ -75,7 +75,7 @@ const NavBar = ({ user }: Props) => {
               blogify
             </Link>
           </div>
-          <div className="flex justify-end flex-1 px-2">
+          <div className="flex justify-end flex-1 lg:px-2">
             <div className="flex items-center">
               <Link href={"/write"} className="">
                 <button className="btn btn-ghost">Write</button>

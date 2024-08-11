@@ -25,33 +25,42 @@ const FilterFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
   }, []);
 
   return (
-    <div className="filter col-span-1">
-      <ul className="menu bg-base-200 rounded-box">
-        {!selectedCategory ? (
-          <li className="font-bold">
-            <button onClick={() => setSelectedCategory(null)}>RECENT</button>
-          </li>
-        ) : (
-          <li>
-            <button onClick={() => setSelectedCategory(null)}>RECENT</button>
-          </li>
-        )}
-
-        {categories.map((c) => (
-          <div key={c}>
-            {c == selectedCategory ? (
-              <li key={c} className="font-bold">
-                <button onClick={() => setSelectedCategory(c)}>{c}</button>
+    <>
+      {/* ---------------------------------------- */}
+      <div className="lg:block hidden">
+        <div className="filter lg:col-span-1">
+          <ul className="menu bg-base-200 rounded-box">
+            {!selectedCategory ? (
+              <li className="font-bold">
+                <button onClick={() => setSelectedCategory(null)}>
+                  RECENT
+                </button>
               </li>
             ) : (
-              <li key={c}>
-                <button onClick={() => setSelectedCategory(c)}>{c}</button>
+              <li>
+                <button onClick={() => setSelectedCategory(null)}>
+                  RECENT
+                </button>
               </li>
             )}
-          </div>
-        ))}
-      </ul>
-    </div>
+
+            {categories.map((c) => (
+              <div key={c}>
+                {c == selectedCategory ? (
+                  <li key={c} className="font-bold">
+                    <button onClick={() => setSelectedCategory(c)}>{c}</button>
+                  </li>
+                ) : (
+                  <li key={c}>
+                    <button onClick={() => setSelectedCategory(c)}>{c}</button>
+                  </li>
+                )}
+              </div>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </>
   );
 };
 

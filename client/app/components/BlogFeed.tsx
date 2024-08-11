@@ -42,7 +42,7 @@ const BlogFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
   }, [selectedCategory]);
 
   return (
-    <div className="feed col-span-3">
+    <div className="feed col-span-4 lg:col-span-3">
       <div>
         {posts.map((p) => (
           <div className="flex flex-col gap-4 p-4" key={p.id}>
@@ -62,7 +62,7 @@ const BlogFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
                 <span className="badge badge-info">
                   {updateDate(p.createdAt)[0]}
                 </span>
-                <span className="badge badge-info">
+                <span className="hidden lg:block badge badge-info">
                   {updateDate(p.createdAt)[1]}
                 </span>
               </div>
@@ -72,7 +72,6 @@ const BlogFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
                 <Link
                   className=" hover:underline"
                   key={p.id}
-                  onClick={() => localStorage.setItem("lastLink", path)}
                   href={`/post/${p.id}`}
                 >
                   {p.title}
