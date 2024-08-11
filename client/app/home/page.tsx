@@ -34,7 +34,7 @@ const page = () => {
   return (
     <main>
       <NavBar user={user}></NavBar>
-      <div className="grid grid-cols-4 gap-10 p-4 relative">
+      <div className="lg:grid lg:grid-cols-4 gap-10 p-4 relative">
         <FilterFeed
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}

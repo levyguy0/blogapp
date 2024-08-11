@@ -13,7 +13,6 @@ interface Props {
 
 const BlogFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
-  const path = usePathname();
 
   useEffect(() => {
     if (!selectedCategory) {

@@ -28,8 +28,8 @@ const FilterFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
   return (
     <>
       {/* ---------------------------------------- */}
-      <div className="lg:block hidden">
-        <div className="filter lg:col-span-1">
+      <div className="">
+        <div className="lg:col-span-1 mb-4">
           <ul className="menu bg-base-200 rounded-box">
             {!selectedCategory ? (
               <li className="font-bold">
