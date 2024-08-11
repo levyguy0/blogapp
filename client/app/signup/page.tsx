@@ -10,8 +10,11 @@ const page = () => {
   useEffect(() => {
     const checkLoggedIn = async () => {
       await axios
-        .get("http://localhost:8080/users/me", { withCredentials: true })
-        .then((res) => setUser(res.data.user));
+        .get("/api/users/me", { withCredentials: true })
+        .then((res) => setUser(res.data.user))
+        .catch((err) => {
+          return;
+        });
     };
 
     checkLoggedIn();

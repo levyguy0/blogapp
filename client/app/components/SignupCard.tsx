@@ -37,24 +37,40 @@ const SignupCard = () => {
     };
 
     axios
-      .post("http://localhost:8080/users/signup", user)
+      .post("/api/users/signup", user)
       .then((res) => {
         location.replace("/login");
       })
       .catch((error: any) => {
-        error.response.data.error.forEach((err: FieldError) => {
-          switch (err.path) {
+        // error.response.data.error.forEach((err: FieldError) => {
+        //   switch (err.path) {
+        //     case "username":
+        //       setUsernameError(err.msg);
+        //       break;
+        //     case "name":
+        //       setNameError(err.msg);
+        //       break;
+        //     case "email":
+        //       setEmailError(err.msg);
+        //       break;
+        //     case "password":
+        //       setPasswordError(err.msg);
+        //       break;
+        //   }
+        // });
+        error.response.data.issues.forEach((err: any) => {
+          switch (err.path[0]) {
             case "username":
-              setUsernameError(err.msg);
+              setUsernameError(err.message);
               break;
             case "name":
-              setNameError(err.msg);
+              setNameError(err.message);
               break;
             case "email":
-              setEmailError(err.msg);
+              setEmailError(err.message);
               break;
             case "password":
-              setPasswordError(err.msg);
+              setPasswordError(err.message);
               break;
           }
         });

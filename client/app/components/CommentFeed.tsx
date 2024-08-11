@@ -1,17 +1,21 @@
-import BlogPost from "@/models/BlogPost";
+import Comment from "@/models/Comment";
 import Link from "next/link";
 import React from "react";
 
 interface Props {
-  post?: BlogPost;
+  comments: Comment[];
+  author?: string;
 }
 
-const CommentFeed = ({ post }: Props) => {
+const CommentFeed = ({ comments, author }: Props) => {
   return (
     <div>
-      {post?.comments.map((c) => (
+      {comments?.map((c) => (
         <div className="flex gap-4 flex-col my-2 py-2" key={c.id}>
           <div className="flex gap-2">
+            {author == c.authorId && (
+              <span className="badge badge-accent">Author</span>
+            )}
             <span className="badge badge-secondary">
               <Link href={`/user/${c.authorName}`}>{c.authorName} </Link>
             </span>

@@ -24,7 +24,7 @@ const page = () => {
   useEffect(() => {
     const checkLoggedIn = async () => {
       await axios
-        .get("http://localhost:8080/users/me", { withCredentials: true })
+        .get("/api/users/me", { withCredentials: true })
         .then((res) => {
           if (res.data.user) {
             setUser(res.data.user);
@@ -41,7 +41,7 @@ const page = () => {
 
     const fetchCategories = async () => {
       await axios
-        .get("http://localhost:8080/posts/category/all", {
+        .get("/api/category/all", {
           withCredentials: true,
         })
         .then((res) => {
@@ -77,25 +77,25 @@ const page = () => {
     };
 
     await axios
-      .post("http://localhost:8080/posts/", post, { withCredentials: true })
+      .post("/api/posts/", post, { withCredentials: true })
       .then(() => {
         location.replace("/home");
       })
       .catch((error) => {
-        error.response.data.error.forEach((err: FieldError) => {
-          switch (err.path) {
+        error.response.data.issues.forEach((err: any) => {
+          switch (err.path[0]) {
             case "title":
-              setTitleError(err.msg);
+              setTitleError(err.message);
               break;
             case "description":
-              setDescError(err.msg);
+              setDescError(err.message);
               break;
             case "content":
-              setContentError(err.msg);
+              setContentError(err.message);
               break;
           }
         });
-        scrollTo({ top: 0, behavior: "smooth" });
+        window.scrollTo({ top: 0, behavior: "smooth" });
       });
   };
 

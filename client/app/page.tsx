@@ -10,13 +10,16 @@ export default function Home() {
   useEffect(() => {
     const checkLoggedIn = async () => {
       await axios
-        .get("http://localhost:8080/users/me", { withCredentials: true })
+        .get("/api/users/me", { withCredentials: true })
         .then((res) => {
           if (res.data.user) {
             location.replace("/home");
           } else {
             return;
           }
+        })
+        .catch((err) => {
+          return;
         });
     };
 

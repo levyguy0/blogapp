@@ -1,6 +1,6 @@
 "use client";
 
-import BlogPost from "@/models/BlogPost";
+import { BlogPost } from "@/models/BlogPost";
 import axios from "axios";
 import React, { useRef, useState } from "react";
 
@@ -23,7 +23,7 @@ const CommentBar = ({ post }: Props) => {
 
     const res = await axios
       .post(
-        "http://localhost:8080/posts/comment",
+        "/api/posts/comment",
         { content: content, blogID: post?.id },
         { withCredentials: true }
       )

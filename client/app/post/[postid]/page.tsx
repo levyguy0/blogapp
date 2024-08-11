@@ -2,8 +2,9 @@
 import CommentBar from "@/app/components/CommentBar";
 import CommentFeed from "@/app/components/CommentFeed";
 import NavBar from "@/app/components/NavBar";
-import BlogPost from "@/models/BlogPost";
+import { BlogPost } from "@/models/BlogPost";
 import ShownUser from "@/models/ShownUser";
+import Comment from "@/models/Comment";
 import axios from "axios";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -13,12 +14,13 @@ import React, { useEffect, useState } from "react";
 const page = ({ params }: { params: { postid: string } }) => {
   const [user, setUser] = useState<ShownUser | null>();
   const [post, setPost] = useState<BlogPost>();
+  const [comments, setComments] = useState<Comment[]>([]);
   const path = usePathname();
   const router = useRouter();
   useEffect(() => {
     const checkLoggedIn = async () => {
       await axios
-        .get("http://localhost:8080/users/me", { withCredentials: true })
+        .get("/api/users/me", { withCredentials: true })
         .then((res) => {
           if (res.data.user) {
             setUser(res.data.user);
@@ -35,11 +37,12 @@ const page = ({ params }: { params: { postid: string } }) => {
 
     const getPost = async () => {
       await axios
-        .get(`http://localhost:8080/posts/byid/${params.postid}`, {
+        .get(`/api/posts/byid?id=${params.postid}`, {
           withCredentials: true,
         })
         .then((res: any) => {
           setPost(res.data.post);
+          setComments(res.data.comments);
         });
     };
 
@@ -101,7 +104,10 @@ const page = ({ params }: { params: { postid: string } }) => {
           <div className="py-10">
             <CommentBar post={post}></CommentBar>
           </div>
-          <CommentFeed post={post}></CommentFeed>
+          <CommentFeed
+            comments={comments}
+            author={post?.authorId}
+          ></CommentFeed>
         </div>
       </div>
     </main>

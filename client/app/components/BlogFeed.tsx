@@ -1,8 +1,7 @@
 "use client";
 import axios, { AxiosResponse } from "axios";
 import React, { useEffect, useState } from "react";
-import BlogPost from "../../models/BlogPost";
-import ShownUser from "@/models/ShownUser";
+import { BlogPost } from "../../models/BlogPost";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -19,7 +18,7 @@ const BlogFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
     if (!selectedCategory) {
       const fetchPosts = async () => {
         await axios
-          .get("http://localhost:8080/posts", { withCredentials: true })
+          .get("/api/posts", { withCredentials: true })
           .then((res: AxiosResponse) => {
             setPosts(res.data.posts);
           });
@@ -29,7 +28,7 @@ const BlogFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
     } else {
       const fetchPosts = async () => {
         await axios
-          .get(`http://localhost:8080/posts/bycategory/${selectedCategory}`, {
+          .get(`/api/posts/bycategory?category=${selectedCategory}`, {
             withCredentials: true,
           })
           .then((res: AxiosResponse) => {

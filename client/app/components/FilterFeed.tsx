@@ -13,7 +13,7 @@ const FilterFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
   useEffect(() => {
     const fetchCategories = async () => {
       await axios
-        .get("http://localhost:8080/posts/category/all", {
+        .get("/api/category/all", {
           withCredentials: true,
         })
         .then((res) => {

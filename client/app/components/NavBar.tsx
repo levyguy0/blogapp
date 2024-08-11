@@ -12,7 +12,7 @@ interface Props {
 const NavBar = ({ user }: Props) => {
   const path = usePathname();
   const logout = async () => {
-    await axios.get("http://localhost:8080/users/logout", {
+    await axios.get("/api/users/logout", {
       withCredentials: true,
     });
     location.replace("/");

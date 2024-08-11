@@ -15,7 +15,7 @@ const page = ({ params }: { params: { username: string } }) => {
   useEffect(() => {
     const checkLoggedIn = async () => {
       await axios
-        .get("http://localhost:8080/users/me", { withCredentials: true })
+        .get("/api/users/me", { withCredentials: true })
         .then((res) => {
           if (res.data.user) {
             setUser(res.data.user);
@@ -32,7 +32,7 @@ const page = ({ params }: { params: { username: string } }) => {
 
     const getViewedUser = async () => {
       await axios
-        .get(`http://localhost:8080/users/byusername/${params.username}`, {
+        .get(`/api/users/byusername?username=${params.username}`, {
           withCredentials: true,
         })
         .then((res) => {
@@ -65,7 +65,6 @@ const page = ({ params }: { params: { username: string } }) => {
               <h1 className="font-bold text-lg">
                 <Link
                   key={p.id}
-                  onClick={() => localStorage.setItem("lastLink", path)}
                   href={`/post/${p.id}`}
                   className="w-[60%] hover:underline"
                 >

@@ -22,7 +22,7 @@ const LoginCard = () => {
     }
 
     await axios
-      .post("http://localhost:8080/users/login", user, {
+      .post("/api/users/login", user, {
         withCredentials: true,
       })
       .then(() => {
