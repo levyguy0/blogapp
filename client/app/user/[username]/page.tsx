@@ -4,13 +4,11 @@ import UserProfile from "@/app/components/UserProfile";
 import ShownUser from "@/models/ShownUser";
 import axios from "axios";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const page = ({ params }: { params: { username: string } }) => {
   const [user, setUser] = useState<ShownUser | null>();
   const [viewedUser, setViewedUser] = useState<ShownUser | null>();
-  const path = usePathname();
 
   useEffect(() => {
     const checkLoggedIn = async () => {

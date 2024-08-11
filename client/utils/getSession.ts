@@ -17,6 +17,7 @@ async function getSession() {
 
     const user = await prisma.user.findUnique({
       where: { id: payload["sub"] },
+      include: { posts: true },
     });
     return user;
   }

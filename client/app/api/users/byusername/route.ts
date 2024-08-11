@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  const user = await prisma.user.findFirst({
+  const user = await prisma.user.findUnique({
     where: {
       username: username,
     },
@@ -25,22 +25,12 @@ export async function GET(req: NextRequest) {
 
   if (user) {
     if (user.posts && user.posts.length > 0) {
-      const userPosts = user.posts.map((post) => ({
-        id: post.id,
-        title: post.title,
-        description: post.description,
-        content: post.content,
-        category: post.category,
-        createdAt: post.createdAt,
-        authorName: post.authorName,
-      }));
-
       return NextResponse.json(
         {
           user: {
             id: user.id,
             username: user.username,
-            posts: userPosts,
+            posts: user.posts,
           },
         },
         { status: 200 }

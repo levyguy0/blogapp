@@ -12,6 +12,7 @@ export async function GET() {
           email: user.email,
           name: user.name,
           username: user.username,
+          posts: user.posts,
         },
       },
       { status: 200 }

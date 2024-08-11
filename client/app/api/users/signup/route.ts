@@ -23,6 +23,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Already Registered" }, { status: 409 });
   }
 
+  user = await prisma.user.findUnique({
+    where: {
+      username: body.username,
+    },
+  });
+
+  if (user) {
+    return NextResponse.json({ error: "Username is taken." }, { status: 409 });
+  }
+
   let new_user = {
     username: body.username,
     name: body.name,
