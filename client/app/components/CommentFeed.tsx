@@ -1,4 +1,5 @@
 import Comment from "@/models/Comment";
+import updateDate from "@/utils/updateDate";
 import Link from "next/link";
 import React from "react";
 
@@ -19,7 +20,12 @@ const CommentFeed = ({ comments, author }: Props) => {
             <span className="badge badge-secondary">
               <Link href={`/user/${c.authorName}`}>{c.authorName} </Link>
             </span>
-            <span className="badge badge-primary">{c.createdAt}</span>
+            <span className="badge badge-info">
+              {updateDate(c.createdAt)[0]}
+            </span>
+            <span className="badge badge-info">
+              {updateDate(c.createdAt)[1]}
+            </span>
           </div>
           <div>{c.content}</div>
           <div className="divider divider-info"></div>

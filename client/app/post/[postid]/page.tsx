@@ -10,12 +10,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import updateDate from "@/utils/updateDate";
 
 const page = ({ params }: { params: { postid: string } }) => {
   const [user, setUser] = useState<ShownUser | null>();
   const [post, setPost] = useState<BlogPost>();
   const [comments, setComments] = useState<Comment[]>([]);
-  const path = usePathname();
   const router = useRouter();
   useEffect(() => {
     const checkLoggedIn = async () => {
@@ -93,7 +93,14 @@ const page = ({ params }: { params: { postid: string } }) => {
               </span>
 
               <span className="badge badge-info items-end justify-end">
-                {post?.createdAt}
+                {post?.createdAt
+                  ? updateDate(post?.createdAt)[0]
+                  : post?.createdAt}
+              </span>
+              <span className="badge badge-info items-end justify-end">
+                {post?.createdAt
+                  ? updateDate(post?.createdAt)[1]
+                  : post?.createdAt}
               </span>
             </div>
           </div>

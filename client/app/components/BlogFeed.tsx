@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { BlogPost } from "../../models/BlogPost";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import updateDate from "@/utils/updateDate";
 
 interface Props {
   selectedCategory: string | null;
@@ -57,7 +58,14 @@ const BlogFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
                   </Link>
                 </span>
               </div>
-              <span className="badge badge-info">{p.createdAt}</span>
+              <div className="flex gap-2">
+                <span className="badge badge-info">
+                  {updateDate(p.createdAt)[0]}
+                </span>
+                <span className="badge badge-info">
+                  {updateDate(p.createdAt)[1]}
+                </span>
+              </div>
             </div>
             <div className="flex flex-col gap-2">
               <h1 className="font-bold text-lg">
