@@ -4,11 +4,13 @@ import UserProfile from "@/app/components/UserProfile";
 import ShownUser from "@/models/ShownUser";
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const page = ({ params }: { params: { username: string } }) => {
   const [user, setUser] = useState<ShownUser | null>();
   const [viewedUser, setViewedUser] = useState<ShownUser | null>();
+  const router = useRouter();
 
   useEffect(() => {
     const checkLoggedIn = async () => {
@@ -18,11 +20,11 @@ const page = ({ params }: { params: { username: string } }) => {
           if (res.data.user) {
             setUser(res.data.user);
           } else {
-            location.replace("/login");
+            router.replace("/login");
           }
         })
         .catch((err) => {
-          location.replace("/login");
+          router.replace("/login");
         });
     };
 

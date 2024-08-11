@@ -50,12 +50,7 @@ const BlogFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
               <div className="flex gap-2">
                 <span className="badge badge-primary">{p.category}</span>
                 <span className="badge badge-secondary hover:underline">
-                  <Link
-                    onClick={() => localStorage.setItem("lastLink", path)}
-                    href={`/user/${p.authorName}`}
-                  >
-                    {p.authorName}
-                  </Link>
+                  <Link href={`/user/${p.authorName}`}>{p.authorName}</Link>
                 </span>
               </div>
               <div className="flex gap-2">

@@ -5,9 +5,11 @@ import axios from "axios";
 import ShownUser from "@/models/ShownUser";
 import BlogFeed from "../components/BlogFeed";
 import FilterFeed from "../components/FilterFeed";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const [user, setUser] = useState<ShownUser | null>();
+  const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   useEffect(() => {
@@ -18,11 +20,11 @@ const page = () => {
           if (res.data.user) {
             setUser(res.data.user);
           } else {
-            location.replace("/login");
+            router.replace("/login");
           }
         })
         .catch((err) => {
-          location.replace("/login");
+          router.replace("/login");
         });
     };
 

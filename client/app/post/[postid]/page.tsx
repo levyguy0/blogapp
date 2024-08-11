@@ -25,11 +25,11 @@ const page = ({ params }: { params: { postid: string } }) => {
           if (res.data.user) {
             setUser(res.data.user);
           } else {
-            location.replace("/login");
+            router.replace("/login");
           }
         })
         .catch((err) => {
-          location.replace("/login");
+          router.replace("/login");
         });
     };
 

@@ -3,6 +3,7 @@ import ShownUser from "@/models/ShownUser";
 import axios from "axios";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
 interface Props {
@@ -10,12 +11,13 @@ interface Props {
 }
 
 const NavBar = ({ user }: Props) => {
+  const router = useRouter();
   const path = usePathname();
   const logout = async () => {
     await axios.get("/api/users/logout", {
       withCredentials: true,
     });
-    location.replace("/");
+    router.replace("/");
   };
 
   return (
@@ -56,50 +58,53 @@ const NavBar = ({ user }: Props) => {
           </div>
         </div>
       ) : (
-        <div
-          className={`navbar bg-base-100 ${
-            path == "/login" || path == "/signup" || path == "/"
-              ? "absolute"
-              : ""
-          }`}
-        >
-          <div className="flex-1">
-            <Link
-              href={
-                path == "/login" || path == "/signup" || path == "/"
-                  ? "/"
-                  : "/home"
-              }
-              className="text-xl btn btn-ghost"
-            >
-              blogify
-            </Link>
-          </div>
-          <div className="flex justify-end flex-1 lg:px-2">
-            <div className="flex items-center">
-              <Link href={"/write"} className="">
-                <button className="btn btn-ghost">Write</button>
+        // -------------------------------
+        <>
+          <div
+            className={`navbar bg-base-100 ${
+              path == "/login" || path == "/signup" || path == "/"
+                ? "absolute"
+                : ""
+            }`}
+          >
+            <div className="flex-1">
+              <Link
+                href={
+                  path == "/login" || path == "/signup" || path == "/"
+                    ? "/"
+                    : "/home"
+                }
+                className="btn btn-ghost text-xl"
+              >
+                blogify
               </Link>
-              <div className="dropdown dropdown-end">
-                <div
-                  tabIndex={0}
-                  role="button"
-                  className="btn btn-ghost rounded-btn"
-                >
-                  {user.username}
+            </div>
+            <div className="flex justify-end flex-1 lg:px-2">
+              <div className="flex items-center">
+                <Link href={"/write"} className="">
+                  <button className="btn btn-ghost">Write</button>
+                </Link>
+                <div className="dropdown dropdown-end ">
+                  <div
+                    tabIndex={0}
+                    role="button"
+                    className="btn btn-ghost rounded-btn"
+                  >
+                    {user.username}
+                  </div>
+                  <ul
+                    tabIndex={0}
+                    className="menu dropdown-content z-[1] p-2 shadow bg-base-200 rounded-box w-52 mt-4"
+                  >
+                    <li>
+                      <button onClick={logout}>Logout</button>
+                    </li>
+                  </ul>
                 </div>
-                <ul
-                  tabIndex={0}
-                  className="menu dropdown-content z-[1] p-2 shadow bg-base-200 rounded-box w-52 mt-4"
-                >
-                  <li>
-                    <button onClick={logout}>Logout</button>
-                  </li>
-                </ul>
               </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

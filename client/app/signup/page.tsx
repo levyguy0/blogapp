@@ -4,9 +4,12 @@ import NavBar from "../components/NavBar";
 import SignupCard from "../components/SignupCard";
 import ShownUser from "@/models/ShownUser";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const [user, setUser] = useState<ShownUser>();
+  const router = useRouter();
+
   useEffect(() => {
     const checkLoggedIn = async () => {
       await axios
@@ -22,7 +25,7 @@ const page = () => {
 
   useEffect(() => {
     if (user) {
-      location.replace("/home");
+      router.replace("/home");
     }
   }, [user]);
 

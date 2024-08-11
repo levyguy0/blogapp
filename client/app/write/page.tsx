@@ -3,6 +3,7 @@ import ShownUser from "@/models/ShownUser";
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import NavBar from "../components/NavBar";
+import { useRouter } from "next/navigation";
 
 interface FieldError {
   msg: string;
@@ -20,6 +21,7 @@ const page = () => {
   const descRef = useRef<HTMLTextAreaElement>(null);
   const contentRef = useRef<HTMLTextAreaElement>(null);
   const selectRef = useRef<HTMLSelectElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const checkLoggedIn = async () => {
@@ -29,11 +31,11 @@ const page = () => {
           if (res.data.user) {
             setUser(res.data.user);
           } else {
-            location.replace("/login");
+            router.replace("/login");
           }
         })
         .catch((err) => {
-          location.replace("/login");
+          router.replace("/login");
         });
     };
 

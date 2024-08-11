@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef, useState } from "react";
 import axios from "axios";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 interface FieldError {
   msg: string;
@@ -17,6 +17,7 @@ const SignupCard = () => {
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const router = useRouter();
 
   const handleSignup = () => {
     setUsernameError("");
@@ -39,7 +40,7 @@ const SignupCard = () => {
     axios
       .post("/api/users/signup", user)
       .then((res) => {
-        location.replace("/login");
+        router.replace("/login");
       })
       .catch((error: any) => {
         // error.response.data.error.forEach((err: FieldError) => {

@@ -1,11 +1,13 @@
 "use client";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
 
 const LoginCard = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState("");
+  const router = useRouter();
 
   const handleLogin = async () => {
     const password = passwordRef.current?.value;
@@ -26,7 +28,7 @@ const LoginCard = () => {
         withCredentials: true,
       })
       .then(() => {
-        location.replace("/home");
+        router.replace("/home");
       })
       .catch((error: any) => {
         setError(error.response.data.error);
