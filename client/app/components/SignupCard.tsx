@@ -58,22 +58,31 @@ const SignupCard = () => {
         //       break;
         //   }
         // });
-        error.response.data.issues.forEach((err: any) => {
-          switch (err.path[0]) {
-            case "username":
-              setUsernameError(err.message);
-              break;
-            case "name":
-              setNameError(err.message);
-              break;
-            case "email":
-              setEmailError(err.message);
-              break;
-            case "password":
-              setPasswordError(err.message);
-              break;
+        try {
+          error.response.data.issues.forEach((err: any) => {
+            switch (err.path[0]) {
+              case "username":
+                setUsernameError(err.message);
+                break;
+              case "name":
+                setNameError(err.message);
+                break;
+              case "email":
+                setEmailError(err.message);
+                break;
+              case "password":
+                setPasswordError(err.message);
+                break;
+            }
+          });
+        } catch {
+          console.log(error.response.data);
+          if (error.response.data.path == "email") {
+            setEmailError(error.response.data.error);
+          } else if (error.response.data.path == "username") {
+            setUsernameError(error.response.data.error);
           }
-        });
+        }
       });
   };
 

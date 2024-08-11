@@ -20,7 +20,10 @@ export async function POST(req: NextRequest) {
   });
 
   if (user) {
-    return NextResponse.json({ error: "Already Registered" }, { status: 409 });
+    return NextResponse.json(
+      { error: "Email already Registered", path: "email" },
+      { status: 409 }
+    );
   }
 
   user = await prisma.user.findUnique({
@@ -30,7 +33,10 @@ export async function POST(req: NextRequest) {
   });
 
   if (user) {
-    return NextResponse.json({ error: "Username is taken." }, { status: 409 });
+    return NextResponse.json(
+      { error: "Username is taken.", path: "username" },
+      { status: 409 }
+    );
   }
 
   let new_user = {
