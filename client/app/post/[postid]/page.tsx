@@ -63,9 +63,9 @@ const page = ({ params }: { params: { postid: string } }) => {
   return (
     <main>
       <NavBar user={user}></NavBar>
-      <div className="flex p-4">
-        <div className="flex-col p-4 w-[20%] hidden lg:flex">
-          <ul className="menu bg-base-200 rounded-box">
+      <div className="flex flex-col lg:flex-row p-4">
+        <div className="flex-row lg:flex-col p-4 w-full lg:w-[20%] flex">
+          <ul className="menu bg-base-200 w-full rounded-box">
             <li>
               <button onClick={() => router.back()}>Back</button>
             </li>
@@ -78,7 +78,7 @@ const page = ({ params }: { params: { postid: string } }) => {
         </div>
         <div className=" p-4 flex flex-col w-full lg:w-[80%]">
           <div>
-            <div className="text-3xl lg:text-5xl font-bold text-info mb-2 lg:mb-10 ">
+            <div className="text-3xl lg:mt-0 lg:text-5xl font-bold text-info mb-2 lg:mb-10 ">
               {post?.title}
             </div>
           </div>
@@ -99,7 +99,7 @@ const page = ({ params }: { params: { postid: string } }) => {
                   ? updateDate(post?.createdAt)[0]
                   : post?.createdAt}
               </span>
-              <span className="badge badge-sm lg:badge-md badge-info items-end justify-end">
+              <span className="badge badge-sm lg:badge-md badge-info hidden lg:flex items-end justify-end">
                 {post?.createdAt
                   ? updateDate(post?.createdAt)[1]
                   : post?.createdAt}
