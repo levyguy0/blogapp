@@ -36,7 +36,13 @@ export async function GET(req: NextRequest) {
         { status: 200 }
       );
     } else {
-      return NextResponse.json({ message: "User has not posted." });
+      return NextResponse.json({
+        user: {
+          id: user.id,
+          username: user.username,
+          message: "No posts yet",
+        },
+      });
     }
   } else {
     return NextResponse.json({ error: "User not found." }, { status: 404 });

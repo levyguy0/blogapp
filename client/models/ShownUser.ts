@@ -3,6 +3,7 @@ export default interface ShownUser {
   username: string;
   id: string;
   posts: Post[];
+  message?: string;
 }
 
 interface Post {

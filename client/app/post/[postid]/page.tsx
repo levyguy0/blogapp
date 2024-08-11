@@ -51,7 +51,7 @@ const page = ({ params }: { params: { postid: string } }) => {
 
   const handleDeletePost = async () => {
     await axios
-      .delete("http://localhost:8080/posts/", {
+      .delete("/api/posts/", {
         data: { id: post?.id },
         withCredentials: true,
       })
