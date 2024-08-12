@@ -11,6 +11,8 @@ const page = () => {
   const [user, setUser] = useState<ShownUser | null>();
   const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [numberOfPages, setNumberOfPages] = useState(0);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     const checkLoggedIn = async () => {
@@ -38,8 +40,16 @@ const page = () => {
         <FilterFeed
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
+          page={page}
+          setPage={setPage}
+          numberOfPages={numberOfPages}
+          setNumberOfPages={setNumberOfPages}
         ></FilterFeed>
         <BlogFeed
+          page={page}
+          setPage={setPage}
+          numberOfPages={numberOfPages}
+          setNumberOfPages={setNumberOfPages}
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
         ></BlogFeed>

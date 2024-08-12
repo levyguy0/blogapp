@@ -2,13 +2,25 @@
 //TODO add drawer for the menu when on mobile
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import Pagination from "./Pagination";
 
 interface Props {
   selectedCategory: string | null;
   setSelectedCategory: (category: string | null) => void;
+  numberOfPages: number;
+  setNumberOfPages: (num: number) => void;
+  page: number;
+  setPage: (num: number) => void;
 }
 
-const FilterFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
+const FilterFeed = ({
+  selectedCategory,
+  setSelectedCategory,
+  numberOfPages,
+  setNumberOfPages,
+  page,
+  setPage,
+}: Props) => {
   const [categories, setCategories] = useState<string[]>([]);
 
   useEffect(() => {
@@ -33,13 +45,23 @@ const FilterFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
           <ul className="menu bg-base-200 rounded-box">
             {!selectedCategory ? (
               <li className="font-bold">
-                <button onClick={() => setSelectedCategory(null)}>
+                <button
+                  onClick={() => {
+                    setPage(1);
+                    setSelectedCategory(null);
+                  }}
+                >
                   RECENT
                 </button>
               </li>
             ) : (
               <li>
-                <button onClick={() => setSelectedCategory(null)}>
+                <button
+                  onClick={() => {
+                    setPage(1);
+                    setSelectedCategory(null);
+                  }}
+                >
                   RECENT
                 </button>
               </li>
@@ -49,17 +71,36 @@ const FilterFeed = ({ selectedCategory, setSelectedCategory }: Props) => {
               <div key={c}>
                 {c == selectedCategory ? (
                   <li key={c} className="font-bold">
-                    <button onClick={() => setSelectedCategory(c)}>{c}</button>
+                    <button
+                      onClick={() => {
+                        setPage(1);
+                        setSelectedCategory(c);
+                      }}
+                    >
+                      {c}
+                    </button>
                   </li>
                 ) : (
                   <li key={c}>
-                    <button onClick={() => setSelectedCategory(c)}>{c}</button>
+                    <button
+                      onClick={() => {
+                        setPage(1);
+                        setSelectedCategory(c);
+                      }}
+                    >
+                      {c}
+                    </button>
                   </li>
                 )}
               </div>
             ))}
           </ul>
         </div>
+        <Pagination
+          page={page}
+          setPage={setPage}
+          numberOfPages={numberOfPages}
+        ></Pagination>
       </div>
     </>
   );
