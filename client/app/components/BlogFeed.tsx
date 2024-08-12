@@ -80,7 +80,7 @@ const BlogFeed = ({
                 </div>
               </div>
               <div className="flex flex-col gap-2">
-                <h1 className="font-bold text-md lg:text-lg">
+                <h1 className="font-bold text-md lg:text-lg overflow-hidden text-ellipsis whitespace-nowrap max-w-[30ch] md:max-w-full">
                   <Link
                     className=" hover:underline"
                     key={p.id}
@@ -89,13 +89,15 @@ const BlogFeed = ({
                     {p.title}
                   </Link>
                 </h1>
-                <div className="text-sm lg:text-md">{p.description}</div>
+                <div className="text-sm lg:text-md overflow-hidden text-ellipsis whitespace-nowrap max-w-[30ch] md:max-w-[70ch] lg:max-w-full">
+                  {p.description}
+                </div>
               </div>
               <div className="divider divider-info"></div>
             </div>
           ))
         ) : (
-          <div className="w-[80%] font-bold flex flex-col items-center justify-center">
+          <div className="w-screen lg:w-[80%] text-center my-2 font-bold flex flex-col items-center justify-center">
             <div>No posts here yet. </div>
             {selectedCategory && (
               <div>

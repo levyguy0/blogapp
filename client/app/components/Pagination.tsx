@@ -8,7 +8,7 @@ interface Props {
 
 const Pagination = ({ page, numberOfPages, setPage }: Props) => {
   return (
-    <div className="join">
+    <div className="join my-2">
       <button
         className={`join-item btn ${page == 1 && "btn-disabled"}`}
         onClick={() => setPage(page - 1)}

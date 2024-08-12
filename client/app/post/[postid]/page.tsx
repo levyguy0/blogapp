@@ -56,7 +56,7 @@ const page = ({ params }: { params: { postid: string } }) => {
         withCredentials: true,
       })
       .then(() => {
-        location.replace("/home");
+        router.replace("/home");
       });
   };
 
@@ -64,7 +64,7 @@ const page = ({ params }: { params: { postid: string } }) => {
     <main>
       <NavBar user={user}></NavBar>
       <div className="flex flex-col lg:flex-row p-4">
-        <div className="flex-row lg:flex-col p-4 w-full lg:w-[20%] flex">
+        <div className="flex-row lg:flex-col p-2 w-full lg:w-[20%] flex">
           <ul className="menu bg-base-200 w-full rounded-box">
             <li>
               <button onClick={() => router.back()}>Back</button>
@@ -78,12 +78,14 @@ const page = ({ params }: { params: { postid: string } }) => {
         </div>
         <div className=" p-4 flex flex-col w-full lg:w-[80%]">
           <div>
-            <div className="text-3xl lg:mt-0 lg:text-5xl font-bold text-info mb-2 lg:mb-10 ">
+            <div className="text-3xl lg:mt-0 lg:text-5xl font-bold text-info mb-2 lg:mb-5 break-words">
               {post?.title}
             </div>
           </div>
           <div className="flex flex-col lg:flex-row gap-2 justify-between">
-            <div className="text-md lg:text-xl mb-2">{post?.description}</div>
+            <div className="text-md lg:text-xl mb-2 lg:w-[65%] break-words ">
+              {post?.description}
+            </div>
             <div className="gap-2 flex">
               <span className="badge badge-sm lg:badge-md badge-secondary items-end justify-end hover:underline">
                 <Link href={`/user/${post?.authorName}`}>
@@ -107,8 +109,8 @@ const page = ({ params }: { params: { postid: string } }) => {
             </div>
           </div>
           <div className="divider divider-secondary"></div>
-          <div>
-            <div className="text-md">{post?.content}</div>
+          <div className="">
+            <div className="text-md break-words">{post?.content}</div>
           </div>
           <div className="py-10">
             <CommentBar post={post}></CommentBar>
