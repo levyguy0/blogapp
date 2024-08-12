@@ -39,6 +39,9 @@ const page = ({ params }: { params: { username: string } }) => {
           if (res.data.user) {
             setViewedUser(res.data.user);
           }
+        })
+        .catch((err) => {
+          return;
         });
     };
 

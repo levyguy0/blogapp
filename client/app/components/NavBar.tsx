@@ -99,6 +99,9 @@ const NavBar = ({ user }: Props) => {
                     <li>
                       <button onClick={logout}>Logout</button>
                     </li>
+                    <li>
+                      <Link href={"/settings"}>Settings</Link>
+                    </li>
                   </ul>
                 </div>
               </div>
