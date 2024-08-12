@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { BlogPost } from "../../models/BlogPost";
 import Link from "next/link";
 import updateDate from "@/utils/updateDate";
+import Pagination from "./Pagination";
 
 interface Props {
   selectedCategory: string | null;
@@ -23,8 +24,7 @@ const BlogFeed = ({
   setPage,
 }: Props) => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
-
-  useEffect(() => {
+  -useEffect(() => {
     if (!selectedCategory) {
       const fetchPosts = async () => {
         await axios
@@ -109,6 +109,13 @@ const BlogFeed = ({
               </div>
             )}
           </div>
+        )}
+        {posts && (
+          <Pagination
+            page={page}
+            numberOfPages={numberOfPages}
+            setPage={setPage}
+          ></Pagination>
         )}
       </div>
     </div>

@@ -11,12 +11,16 @@ import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import updateDate from "@/utils/updateDate";
+import CommentPagination from "@/app/components/CommentPagination";
 
 const page = ({ params }: { params: { postid: string } }) => {
   const [user, setUser] = useState<ShownUser | null>();
   const [post, setPost] = useState<BlogPost>();
   const [comments, setComments] = useState<Comment[]>([]);
+  const [page, setPage] = useState(1);
+  const [numberOfPages, setNumberOfPages] = useState(0);
   const router = useRouter();
+
   useEffect(() => {
     const checkLoggedIn = async () => {
       await axios
@@ -37,17 +41,18 @@ const page = ({ params }: { params: { postid: string } }) => {
 
     const getPost = async () => {
       await axios
-        .get(`/api/posts/byid?id=${params.postid}`, {
+        .get(`/api/posts/byid?id=${params.postid}&page=${page}`, {
           withCredentials: true,
         })
         .then((res: any) => {
           setPost(res.data.post);
           setComments(res.data.comments);
+          setNumberOfPages(res.data.numberOfPages);
         });
     };
 
     getPost();
-  }, []);
+  }, [page]);
 
   const handleDeletePost = async () => {
     await axios
@@ -113,12 +118,17 @@ const page = ({ params }: { params: { postid: string } }) => {
             <div className="text-md break-words">{post?.content}</div>
           </div>
           <div className="py-10">
-            <CommentBar post={post}></CommentBar>
+            <CommentBar post={post} setPage={setPage}></CommentBar>
           </div>
           <CommentFeed
             comments={comments}
             author={post?.authorId}
           ></CommentFeed>
+          <CommentPagination
+            page={page}
+            setPage={setPage}
+            numberOfPages={numberOfPages}
+          ></CommentPagination>
         </div>
       </div>
     </main>

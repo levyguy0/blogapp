@@ -6,9 +6,9 @@ interface Props {
   numberOfPages: number;
 }
 
-const Pagination = ({ page, numberOfPages, setPage }: Props) => {
+const CommentPagination = ({ page, setPage, numberOfPages }: Props) => {
   return (
-    <div className="join my-2">
+    <div className="join">
       <button
         className={`join-item btn ${page == 1 && "btn-disabled"}`}
         onClick={() => setPage(page - 1)}
@@ -28,4 +28,4 @@ const Pagination = ({ page, numberOfPages, setPage }: Props) => {
   );
 };
 
-export default Pagination;
+export default CommentPagination;

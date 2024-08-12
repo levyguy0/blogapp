@@ -6,9 +6,10 @@ import React, { useRef, useState } from "react";
 
 interface Props {
   post?: BlogPost;
+  setPage: (num: number) => void;
 }
 
-const CommentBar = ({ post }: Props) => {
+const CommentBar = ({ post, setPage }: Props) => {
   const [errorTextarea, setErrorTextarea] = useState("");
   const [success, setSuccess] = useState("");
   const commentContent = useRef<HTMLTextAreaElement>(null);
@@ -29,6 +30,7 @@ const CommentBar = ({ post }: Props) => {
       )
       .then((res) => {
         setSuccess(res.data["success"]);
+        setPage(1);
         location.reload();
       });
   };
