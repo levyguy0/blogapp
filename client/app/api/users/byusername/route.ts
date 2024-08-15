@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import { getFollowersInfo } from "@/utils/getFollowersInfo";
 
 const prisma = new PrismaClient();
 
@@ -31,6 +32,8 @@ export async function GET(req: NextRequest) {
             id: user.id,
             username: user.username,
             posts: user.posts,
+            followers: await getFollowersInfo(user.followers),
+            following: await getFollowersInfo(user.following),
           },
         },
         { status: 200 }
@@ -41,6 +44,8 @@ export async function GET(req: NextRequest) {
           id: user.id,
           username: user.username,
           message: "No posts yet",
+          followers: await getFollowersInfo(user.followers),
+          following: await getFollowersInfo(user.following),
         },
       });
     }
