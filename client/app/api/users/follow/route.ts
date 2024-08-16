@@ -40,3 +40,48 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({ message: "Followed user" });
 }
+
+export async function DELETE(req: NextRequest) {
+  const user = await getSession();
+  const body = await req.json();
+  const userToUnfollow = body["id"];
+
+  const userToUnfollowExists = await prisma.user.findUnique({
+    where: { id: userToUnfollow },
+  });
+
+  if (!userToUnfollowExists) {
+    return NextResponse.json({ error: "User does not exist" }, { status: 404 });
+  }
+
+  if (!user?.following.includes(userToUnfollow)) {
+    return NextResponse.json(
+      { error: "User is not currently followed" },
+      { status: 403 }
+    );
+  }
+
+  await prisma.user.update({
+    where: { id: userToUnfollow },
+    data: {
+      followers: {
+        set: userToUnfollowExists.followers.filter(
+          (followerId) => followerId !== user?.id
+        ),
+      },
+    },
+  });
+
+  await prisma.user.update({
+    where: { id: user.id },
+    data: {
+      following: {
+        set: user.following.filter(
+          (followingId) => followingId !== userToUnfollow
+        ),
+      },
+    },
+  });
+
+  return NextResponse.json({ message: "Unfollowed user" });
+}
