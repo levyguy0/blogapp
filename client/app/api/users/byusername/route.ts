@@ -19,19 +19,21 @@ export async function GET(req: NextRequest) {
     where: {
       username: username,
     },
-    include: {
-      posts: true,
-    },
+  });
+
+  const posts = await prisma.blogPost.findMany({
+    where: { authorId: user?.id },
+    orderBy: { createdAt: "desc" },
   });
 
   if (user) {
-    if (user.posts && user.posts.length > 0) {
+    if (posts && posts.length > 0) {
       return NextResponse.json(
         {
           user: {
             id: user.id,
             username: user.username,
-            posts: user.posts,
+            posts: posts,
             followers: await getFollowersInfo(user.followers),
             following: await getFollowersInfo(user.following),
           },

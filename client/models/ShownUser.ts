@@ -1,4 +1,4 @@
-import { BlogPost } from "@prisma/client";
+import { BlogPost } from "../models/BlogPost";
 
 export default interface ShownUser {
   email: string;
