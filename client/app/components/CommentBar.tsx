@@ -1,15 +1,18 @@
 "use client";
 
 import { BlogPost } from "@/models/BlogPost";
+import Comment from "@/models/Comment";
 import axios from "axios";
 import React, { useRef, useState } from "react";
 
 interface Props {
   post?: BlogPost;
   setPage: (num: number) => void;
+  comments: Comment[];
+  setComments: (comments: Comment[]) => void;
 }
 
-const CommentBar = ({ post, setPage }: Props) => {
+const CommentBar = ({ post, setPage, comments, setComments }: Props) => {
   const [errorTextarea, setErrorTextarea] = useState("");
   const [success, setSuccess] = useState("");
   const commentContent = useRef<HTMLTextAreaElement>(null);
@@ -31,7 +34,7 @@ const CommentBar = ({ post, setPage }: Props) => {
       .then((res) => {
         setSuccess(res.data["success"]);
         setPage(1);
-        location.reload();
+        setComments([res.data.comment, ...comments]);
       });
   };
 

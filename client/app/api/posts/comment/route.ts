@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
 
     newComment = await prisma.comment.create({ data: newComment });
 
-    return NextResponse.json({ success: "Added comment" });
+    return NextResponse.json({ success: "Added comment", comment: newComment });
   } else {
     return NextResponse.json("Not logged in", { status: 401 });
   }

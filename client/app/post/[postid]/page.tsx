@@ -118,7 +118,12 @@ const page = ({ params }: { params: { postid: string } }) => {
             <div className="text-md break-words">{post?.content}</div>
           </div>
           <div className="py-10">
-            <CommentBar post={post} setPage={setPage}></CommentBar>
+            <CommentBar
+              post={post}
+              comments={comments}
+              setComments={setComments}
+              setPage={setPage}
+            ></CommentBar>
           </div>
           <CommentFeed
             comments={comments}
