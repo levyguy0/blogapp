@@ -20,11 +20,18 @@ export async function GET(req: NextRequest) {
   }
 
   const commentsPerPage = 20;
+
+  const post = await prisma.blogPost.findUnique({
+    where: { id: id },
+  });
+
   const totalComments = await prisma.comment.count({
     where: { blogPostId: id },
   });
+
   if (totalComments == 0) {
     return NextResponse.json({
+      post: post,
       message: "No comments yet... comment something to get the chat started!",
       numberOfPages: 1,
     });
@@ -37,10 +44,6 @@ export async function GET(req: NextRequest) {
       { status: 400 }
     );
   }
-
-  const post = await prisma.blogPost.findUnique({
-    where: { id: id },
-  });
 
   const comments = await prisma.comment.findMany({
     where: { blogPostId: id },

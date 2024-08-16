@@ -6,4 +6,6 @@ export default interface ShownUser {
   id: string;
   posts: BlogPost[];
   message?: string;
+  following: ShownUser[];
+  followers: ShownUser[];
 }

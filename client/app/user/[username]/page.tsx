@@ -53,7 +53,7 @@ const page = ({ params }: { params: { username: string } }) => {
     <main>
       <NavBar user={user}></NavBar>
       <div className="p-4">
-        <UserProfile user={viewedUser}></UserProfile>
+        <UserProfile user={viewedUser} loggedInUser={user}></UserProfile>
         {viewedUser?.message && (
           <div className="flex flex-col gap-4 p-4 w-screen items-center">
             <h1 className="font-bold text-3xl">{viewedUser?.message}</h1>

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/dist/server/web/spec-extension/response";
 import getSession from "../../../../utils/getSession";
+import { getFollowersInfo } from "@/utils/getFollowersInfo";
 
 export async function GET() {
   const user = await getSession();
@@ -13,6 +14,8 @@ export async function GET() {
           name: user.name,
           username: user.username,
           posts: user.posts,
+          following: await getFollowersInfo(user.following),
+          followers: await getFollowersInfo(user.followers),
         },
       },
       { status: 200 }
