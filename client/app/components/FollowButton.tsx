@@ -20,12 +20,11 @@ const FollowButton = ({
 
     await axios
       .delete("/api/users/follow", {
-        data: certainUser ? { id: certainUser.id } : user?.id,
+        data: certainUser ? { id: certainUser.id } : { id: user?.id },
         withCredentials: true,
       })
       .then((res) => {
         location.reload();
-        certainUser && document.getElementById("my_modal_2")?.showModal();
       })
       .catch(() => {
         setIsFollowing && setIsFollowing(true);
@@ -45,7 +44,6 @@ const FollowButton = ({
       )
       .then((res) => {
         location.reload();
-        certainUser && document.getElementById("my_modal_2")?.showModal();
       })
       .catch(() => {
         setIsFollowing && setIsFollowing(false);
