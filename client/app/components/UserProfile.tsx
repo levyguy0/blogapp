@@ -23,30 +23,32 @@ const UserProfile = ({ user, loggedInUser }: Props) => {
   }, [user, loggedInUser]);
 
   return (
-    <div className="w-full p-4 my-10">
-      <div className="flex gap-2 items-center">
-        <div className="text-2xl lg:text-3xl font-extrabold text-accent">
-          {user?.username}
-        </div>
-        <div className="divider divider-horizontal"></div>
-        <FollowInfo
-          loggedInUser={loggedInUser}
-          user={user}
-          isFollowing={isFollowing}
-          setIsFollowing={setIsFollowing}
-        ></FollowInfo>
-      </div>
-      {!(user?.id == loggedInUser?.id) && (
-        <div>
-          <div className="divider"></div>
-          <FollowButton
-            setIsFollowing={setIsFollowing}
-            isFollowing={isFollowing}
+    <div className="p-4">
+      <div className="w-full p-4 my-10">
+        <div className="flex gap-2 items-center">
+          <div className="text-2xl lg:text-3xl font-extrabold text-accent">
+            {user?.username}
+          </div>
+          <div className="divider divider-horizontal"></div>
+          <FollowInfo
+            loggedInUser={loggedInUser}
             user={user}
-          ></FollowButton>
+            isFollowing={isFollowing}
+            setIsFollowing={setIsFollowing}
+          ></FollowInfo>
         </div>
-      )}
-      <div className="divider"></div>
+        {!(user?.id == loggedInUser?.id) && (
+          <div>
+            <div className="divider"></div>
+            <FollowButton
+              setIsFollowing={setIsFollowing}
+              isFollowing={isFollowing}
+              user={user}
+            ></FollowButton>
+          </div>
+        )}
+        <div className="divider"></div>
+      </div>
     </div>
   );
 };
