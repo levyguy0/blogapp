@@ -16,9 +16,9 @@ const FollowingModal = ({ loggedInUser, user }: Props) => {
   };
 
   return (
-    <div>
-      <dialog id="following_modal" className="modal">
-        <div className="modal-box">
+    <div className="">
+      <dialog id="following_modal" className="modal ">
+        <div className="modal-box max-h-[60vh] md:max-h-[75vh] overflow-y-scroll">
           <form method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
               ✕
