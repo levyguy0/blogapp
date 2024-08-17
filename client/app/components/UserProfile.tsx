@@ -8,6 +8,7 @@ interface Props {
 
 const UserProfile = ({ user, loggedInUser }: Props) => {
   const [isFollowing, setIsFollowing] = useState(false);
+  const [ownProfile, setOwnProfile] = useState(false);
   useEffect(() => {
     const check =
       (user &&
@@ -15,8 +16,10 @@ const UserProfile = ({ user, loggedInUser }: Props) => {
           (followedUser) => followedUser.id === user.id
         )) ??
       false;
-    console.log(check);
+
     setIsFollowing(check);
+
+    if (user?.id == loggedInUser?.id) setOwnProfile(true);
   }, [user, loggedInUser]);
 
   return (
@@ -24,13 +27,15 @@ const UserProfile = ({ user, loggedInUser }: Props) => {
       <div className="text-3xl font-extrabold text-accent">
         {user?.username}
       </div>
-      <div className="my-2">
-        {isFollowing ? (
-          <button className="btn btn-outline btn-info">Following</button>
-        ) : (
-          <button className="btn">Follow</button>
-        )}
-      </div>
+      {!(user?.id == loggedInUser?.id) && (
+        <div className="my-2">
+          {isFollowing ? (
+            <button className="btn btn-outline btn-info">Following</button>
+          ) : (
+            <button className="btn">Follow</button>
+          )}
+        </div>
+      )}
       <div className="divider"></div>
     </div>
   );

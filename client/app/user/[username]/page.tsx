@@ -1,3 +1,4 @@
+//TODO functionality of follow button and then display numbers and list on profile
 "use client";
 import NavBar from "@/app/components/NavBar";
 import UserProfile from "@/app/components/UserProfile";
