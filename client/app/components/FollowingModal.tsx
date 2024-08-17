@@ -26,26 +26,30 @@ const FollowingModal = ({ loggedInUser, user }: Props) => {
           </form>
           <h3 className="font-bold text-lg">{user?.username}'s following</h3>
           <ul className="py-4">
-            {user?.following.map((f) => (
-              <li key={f.id}>
-                <div className="flex justify-between items-center">
-                  <Link
-                    href={`/user/${f.username}`}
-                    className="hover:underline"
-                  >
-                    @{f.username}
-                  </Link>
-                  {!(f.id == loggedInUser?.id) && (
-                    <FollowButton
-                      isFollowing={checkFollowing(f.id)}
-                      certainUser={f}
-                      user={user}
-                    ></FollowButton>
-                  )}
-                </div>
-                <div className="divider"></div>
-              </li>
-            ))}
+            {user?.followers && user?.followers.length > 0 ? (
+              user?.following.map((f) => (
+                <li key={f.id}>
+                  <div className="flex justify-between items-center">
+                    <Link
+                      href={`/user/${f.username}`}
+                      className="hover:underline"
+                    >
+                      @{f.username}
+                    </Link>
+                    {!(f.id == loggedInUser?.id) && (
+                      <FollowButton
+                        isFollowing={checkFollowing(f.id)}
+                        certainUser={f}
+                        user={user}
+                      ></FollowButton>
+                    )}
+                  </div>
+                  <div className="divider"></div>
+                </li>
+              ))
+            ) : (
+              <div>No following yet</div>
+            )}
           </ul>
         </div>
       </dialog>
