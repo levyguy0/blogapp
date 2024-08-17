@@ -1,6 +1,7 @@
 import ShownUser from "@/models/ShownUser";
 import React, { useEffect, useState } from "react";
 import FollowButton from "./FollowButton";
+import FollowInfo from "./FollowInfo";
 
 interface Props {
   user?: ShownUser | null;
@@ -28,23 +29,17 @@ const UserProfile = ({ user, loggedInUser }: Props) => {
           {user?.username}
         </div>
         <div className="divider divider-horizontal"></div>
-        <div className="flex flex-col md:flex-row gap-2">
-          <span className="badge badge-sm lg:badge-md badge-info">
-            {user?.followers.length}{" "}
-            {user?.followers.length !== 1 ? "followers" : "follower"}
-          </span>
-          <span className="badge badge-sm lg:badge-md badge-info">
-            {user?.following.length} following
-          </span>
-        </div>
+        <FollowInfo user={user}></FollowInfo>
       </div>
-      <div className="divider"></div>
       {!(user?.id == loggedInUser?.id) && (
-        <FollowButton
-          setIsFollowing={setIsFollowing}
-          isFollowing={isFollowing}
-          user={user}
-        ></FollowButton>
+        <div>
+          <div className="divider"></div>
+          <FollowButton
+            setIsFollowing={setIsFollowing}
+            isFollowing={isFollowing}
+            user={user}
+          ></FollowButton>
+        </div>
       )}
       <div className="divider"></div>
     </div>
