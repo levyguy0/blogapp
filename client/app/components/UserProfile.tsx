@@ -29,7 +29,12 @@ const UserProfile = ({ user, loggedInUser }: Props) => {
           {user?.username}
         </div>
         <div className="divider divider-horizontal"></div>
-        <FollowInfo user={user}></FollowInfo>
+        <FollowInfo
+          loggedInUser={loggedInUser}
+          user={user}
+          isFollowing={isFollowing}
+          setIsFollowing={setIsFollowing}
+        ></FollowInfo>
       </div>
       {!(user?.id == loggedInUser?.id) && (
         <div>

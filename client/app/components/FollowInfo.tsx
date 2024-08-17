@@ -4,12 +4,20 @@ import FollowersModal from "./FollowersModal";
 
 interface Props {
   user?: ShownUser | null;
+  setIsFollowing: (value: boolean) => void;
+  isFollowing: boolean;
+  loggedInUser?: ShownUser | null;
 }
 
-const FollowInfo = ({ user }: Props) => {
+const FollowInfo = ({
+  isFollowing,
+  setIsFollowing,
+  loggedInUser,
+  user,
+}: Props) => {
   return (
     <div className="flex flex-col md:flex-row gap-2">
-      <FollowersModal user={user}></FollowersModal>
+      <FollowersModal user={user} loggedInUser={loggedInUser}></FollowersModal>
       <button
         onClick={() => document.getElementById("my_modal_2")?.showModal()}
         className="badge badge-sm lg:badge-md badge-info"

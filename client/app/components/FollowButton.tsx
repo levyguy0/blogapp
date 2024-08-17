@@ -5,57 +5,61 @@ import React, { useState } from "react";
 interface Props {
   isFollowing: boolean;
   user?: ShownUser | null;
-  setIsFollowing: (state: boolean) => void;
+  setIsFollowing?: (state: boolean) => void;
+  certainUser?: ShownUser;
 }
 
-const FollowButton = ({ setIsFollowing, isFollowing, user }: Props) => {
+const FollowButton = ({
+  certainUser,
+  setIsFollowing,
+  isFollowing,
+  user,
+}: Props) => {
   const unFollow = async () => {
-    setIsFollowing(false);
-
-    let payload = {
-      id: user?.id,
-    };
+    setIsFollowing && setIsFollowing(false);
 
     await axios
       .delete("/api/users/follow", {
-        data: payload,
+        data: certainUser ? { id: certainUser.id } : user?.id,
         withCredentials: true,
       })
       .then((res) => {
         location.reload();
+        certainUser && document.getElementById("my_modal_2")?.showModal();
       })
       .catch(() => {
-        setIsFollowing(true);
+        setIsFollowing && setIsFollowing(true);
       });
   };
 
   const follow = async () => {
-    setIsFollowing(true);
+    setIsFollowing && setIsFollowing(true);
 
     await axios
       .post(
         "/api/users/follow",
-        { id: user?.id },
+        { id: certainUser ? certainUser.id : user?.id },
         {
           withCredentials: true,
         }
       )
       .then((res) => {
         location.reload();
+        certainUser && document.getElementById("my_modal_2")?.showModal();
       })
       .catch(() => {
-        setIsFollowing(false);
+        setIsFollowing && setIsFollowing(false);
       });
   };
 
   return (
     <div className="my-2">
       {isFollowing ? (
-        <button className="btn btn-outline btn-info" onClick={unFollow}>
+        <button className="btn btn-outline btn-info" onClick={() => unFollow()}>
           Following
         </button>
       ) : (
-        <button className="btn" onClick={follow}>
+        <button className="btn" onClick={() => follow()}>
           Follow
         </button>
       )}

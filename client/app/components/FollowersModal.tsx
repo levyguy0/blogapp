@@ -1,11 +1,20 @@
 import ShownUser from "@/models/ShownUser";
-import React from "react";
+import React, { useState } from "react";
+import FollowButton from "./FollowButton";
+import Link from "next/link";
 
 interface Props {
   user?: ShownUser | null;
+  loggedInUser?: ShownUser | null;
 }
 
-const FollowersModal = ({ user }: Props) => {
+const FollowersModal = ({ loggedInUser, user }: Props) => {
+  const checkFollowing = (id: string) => {
+    const check = loggedInUser?.following?.some((f) => f.id == id) ?? false;
+
+    return check;
+  };
+
   return (
     <div>
       <dialog id="my_modal_2" className="modal">
@@ -16,7 +25,28 @@ const FollowersModal = ({ user }: Props) => {
             </button>
           </form>
           <h3 className="font-bold text-lg">{user?.username}'s followers</h3>
-          <ul className="py-4"></ul>
+          <ul className="py-4">
+            {user?.followers.map((f) => (
+              <li key={f.id}>
+                <div className="flex justify-between items-center">
+                  <Link
+                    href={`/user/${f.username}`}
+                    className="hover:underline"
+                  >
+                    @{f.username}
+                  </Link>
+                  {!(f.id == loggedInUser?.id) && (
+                    <FollowButton
+                      isFollowing={checkFollowing(f.id)}
+                      certainUser={f}
+                      user={user}
+                    ></FollowButton>
+                  )}
+                </div>
+                <div className="divider"></div>
+              </li>
+            ))}
+          </ul>
         </div>
       </dialog>
     </div>
