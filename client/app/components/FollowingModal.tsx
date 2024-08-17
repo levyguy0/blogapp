@@ -26,7 +26,7 @@ const FollowingModal = ({ loggedInUser, user }: Props) => {
           </form>
           <h3 className="font-bold text-lg">{user?.username}'s following</h3>
           <ul className="py-4">
-            {user?.followers && user?.followers.length > 0 ? (
+            {user?.following && user?.following.length > 0 ? (
               user?.following.map((f) => (
                 <li key={f.id}>
                   <div className="flex justify-between items-center">
