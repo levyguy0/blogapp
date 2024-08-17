@@ -97,10 +97,13 @@ const NavBar = ({ user }: Props) => {
                     className="menu dropdown-content z-[1] p-2 shadow bg-base-200 rounded-box w-52 mt-4"
                   >
                     <li>
-                      <button onClick={logout}>Logout</button>
+                      <Link href={`/user/${user.username}`}>Profile</Link>
                     </li>
                     <li>
                       <Link href={"/settings"}>Settings</Link>
+                    </li>
+                    <li>
+                      <button onClick={logout}>Logout</button>
                     </li>
                   </ul>
                 </div>

@@ -1,6 +1,6 @@
 import ShownUser from "@/models/ShownUser";
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 
 interface Props {
   isFollowing: boolean;
@@ -11,6 +11,7 @@ interface Props {
 const FollowButton = ({ setIsFollowing, isFollowing, user }: Props) => {
   const unFollow = async () => {
     setIsFollowing(false);
+
     let payload = {
       id: user?.id,
     };
@@ -21,7 +22,7 @@ const FollowButton = ({ setIsFollowing, isFollowing, user }: Props) => {
         withCredentials: true,
       })
       .then((res) => {
-        return;
+        location.reload();
       })
       .catch(() => {
         setIsFollowing(true);
@@ -40,7 +41,7 @@ const FollowButton = ({ setIsFollowing, isFollowing, user }: Props) => {
         }
       )
       .then((res) => {
-        return;
+        location.reload();
       })
       .catch(() => {
         setIsFollowing(false);

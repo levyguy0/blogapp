@@ -9,6 +9,7 @@ interface Props {
 
 const UserProfile = ({ user, loggedInUser }: Props) => {
   const [isFollowing, setIsFollowing] = useState(false);
+
   useEffect(() => {
     const check =
       (user &&
