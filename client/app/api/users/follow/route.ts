@@ -17,6 +17,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "User does not exist" }, { status: 404 });
   }
 
+  if (userToFollow == user?.id)
+    return NextResponse.json(
+      { error: "Cannot follow yourself" },
+      { status: 403 }
+    );
+
   if (user?.following.includes(userToFollow)) {
     return NextResponse.json(
       { error: "Already following user" },
@@ -53,6 +59,12 @@ export async function DELETE(req: NextRequest) {
   if (!userToUnfollowExists) {
     return NextResponse.json({ error: "User does not exist" }, { status: 404 });
   }
+
+  if (userToUnfollow == user?.id)
+    return NextResponse.json(
+      { error: "Cannot unfollow yourself" },
+      { status: 403 }
+    );
 
   if (!user?.following.includes(userToUnfollow)) {
     return NextResponse.json(
