@@ -1,5 +1,6 @@
 import ShownUser from "@/models/ShownUser";
 import React, { useEffect, useState } from "react";
+import FollowButton from "./FollowButton";
 
 interface Props {
   user?: ShownUser | null;
@@ -8,7 +9,6 @@ interface Props {
 
 const UserProfile = ({ user, loggedInUser }: Props) => {
   const [isFollowing, setIsFollowing] = useState(false);
-  const [ownProfile, setOwnProfile] = useState(false);
   useEffect(() => {
     const check =
       (user &&
@@ -18,8 +18,6 @@ const UserProfile = ({ user, loggedInUser }: Props) => {
       false;
 
     setIsFollowing(check);
-
-    if (user?.id == loggedInUser?.id) setOwnProfile(true);
   }, [user, loggedInUser]);
 
   return (
@@ -28,13 +26,11 @@ const UserProfile = ({ user, loggedInUser }: Props) => {
         {user?.username}
       </div>
       {!(user?.id == loggedInUser?.id) && (
-        <div className="my-2">
-          {isFollowing ? (
-            <button className="btn btn-outline btn-info">Following</button>
-          ) : (
-            <button className="btn">Follow</button>
-          )}
-        </div>
+        <FollowButton
+          setIsFollowing={setIsFollowing}
+          isFollowing={isFollowing}
+          user={user}
+        ></FollowButton>
       )}
       <div className="divider"></div>
     </div>

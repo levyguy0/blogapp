@@ -20,7 +20,7 @@ const CommentFeed = ({ comments, author }: Props) => {
                   Author
                 </span>
               )}
-              <span className="badge badge-sm lg:badge-md badge-secondary">
+              <span className="badge badge-sm hover:underline lg:badge-md badge-secondary">
                 <Link href={`/user/${c.authorName}`}>{c.authorName} </Link>
               </span>
               <span className="badge badge-sm lg:badge-md badge-info">
