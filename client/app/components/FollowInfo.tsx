@@ -1,6 +1,7 @@
 import ShownUser from "@/models/ShownUser";
 import React from "react";
 import FollowersModal from "./FollowersModal";
+import FollowingModal from "./FollowingModal";
 
 interface Props {
   user?: ShownUser | null;
@@ -19,15 +20,19 @@ const FollowInfo = ({
     <div className="flex flex-col md:flex-row gap-2">
       <FollowersModal user={user} loggedInUser={loggedInUser}></FollowersModal>
       <button
-        onClick={() => document.getElementById("my_modal_2")?.showModal()}
+        onClick={() => document.getElementById("follower_modal")?.showModal()}
         className="badge badge-sm lg:badge-md badge-info"
       >
         {user?.followers.length}{" "}
         {user?.followers.length !== 1 ? "followers" : "follower"}
       </button>
-      <span className="badge badge-sm lg:badge-md badge-info">
+      <FollowingModal user={user} loggedInUser={loggedInUser}></FollowingModal>
+      <button
+        onClick={() => document.getElementById("following_modal")?.showModal()}
+        className="badge badge-sm lg:badge-md badge-info"
+      >
         {user?.following.length} following
-      </span>
+      </button>
     </div>
   );
 };
