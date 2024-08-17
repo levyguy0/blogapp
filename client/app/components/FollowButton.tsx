@@ -30,9 +30,6 @@ const FollowButton = ({ setIsFollowing, isFollowing, user }: Props) => {
 
   const follow = async () => {
     setIsFollowing(true);
-    let payload = {
-      id: user?.id,
-    };
 
     await axios
       .post(
