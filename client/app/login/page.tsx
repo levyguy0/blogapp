@@ -1,9 +1,6 @@
-"use client";
 import React, { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import LoginCard from "../components/LoginCard";
-import ShownUser from "@/models/ShownUser";
-import axios from "axios";
 
 const page = () => {
   return (
