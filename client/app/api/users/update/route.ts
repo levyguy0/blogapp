@@ -16,9 +16,19 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ error: "Username taken" }, { status: 409 });
     }
 
-    checkUsername = await prisma.user.update({
+    await prisma.user.update({
       where: { id: user.id },
       data: { username: body.username },
+    });
+
+    await prisma.blogPost.updateMany({
+      where: { authorId: user.id },
+      data: { authorName: body.username },
+    });
+
+    await prisma.comment.updateMany({
+      where: { authorId: user.id },
+      data: { authorName: body.username },
     });
 
     return NextResponse.json({ message: "User updated" }, { status: 200 });
