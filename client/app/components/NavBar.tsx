@@ -4,21 +4,44 @@ import axios from "axios";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 interface Props {
-  user?: ShownUser | null;
+  optionalUser?: ShownUser | null;
 }
 
-const NavBar = ({ user }: Props) => {
+const NavBar = ({ optionalUser }: Props) => {
   const router = useRouter();
   const path = usePathname();
+  const [user, setUser] = useState<ShownUser>();
+
   const logout = async () => {
     await axios.get("/api/users/logout", {
       withCredentials: true,
     });
     router.replace("/");
   };
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await axios
+        .get("/api/users/me")
+        .then((res) => {
+          if (res.data.user) {
+            setUser(res.data.user);
+          }
+        })
+        .catch((err) => {
+          return;
+        });
+    };
+
+    if (optionalUser) {
+      setUser(optionalUser);
+    } else {
+      fetchUser();
+    }
+  }, []);
 
   return (
     <div>
@@ -90,14 +113,14 @@ const NavBar = ({ user }: Props) => {
                     role="button"
                     className="btn btn-ghost rounded-btn"
                   >
-                    {user.username}
+                    {user?.username}
                   </div>
                   <ul
                     tabIndex={0}
                     className="menu dropdown-content z-[1] p-2 shadow bg-base-200 rounded-box w-52 mt-4"
                   >
                     <li>
-                      <Link href={`/user/${user.username}`}>Profile</Link>
+                      <Link href={`/user/${user?.username}`}>Profile</Link>
                     </li>
                     <li>
                       <Link href={"/settings"}>Settings</Link>

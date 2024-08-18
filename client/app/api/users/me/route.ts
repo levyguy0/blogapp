@@ -1,6 +1,7 @@
 import { NextResponse } from "next/dist/server/web/spec-extension/response";
 import getSession from "../../../../utils/getSession";
 import { getFollowersInfo } from "@/utils/getFollowersInfo";
+import ShownUser from "@/models/ShownUser";
 
 export async function GET() {
   const user = await getSession();
@@ -22,5 +23,5 @@ export async function GET() {
     );
   }
 
-  return NextResponse.json("Not logged in", { status: 401 });
+  return NextResponse.json({ error: "Not logged in" }, { status: 401 });
 }

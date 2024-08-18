@@ -52,7 +52,7 @@ const page = ({ params }: { params: { username: string } }) => {
 
   return (
     <main>
-      <NavBar user={user}></NavBar>
+      <NavBar optionalUser={user}></NavBar>
       <div className="">
         <UserProfile user={viewedUser} loggedInUser={user}></UserProfile>
         {viewedUser?.message && (

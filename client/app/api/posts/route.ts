@@ -8,50 +8,57 @@ const prisma = new PrismaClient();
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const page = parseInt(searchParams.get("page") || "1", 10);
+  const user = await getSession();
 
-  if (isNaN(page) || page < 1) {
-    return NextResponse.json({ error: "Invalid page number" }, { status: 400 });
-  }
+  if (user) {
+    if (isNaN(page) || page < 1) {
+      return NextResponse.json(
+        { error: "Invalid page number" },
+        { status: 400 }
+      );
+    }
 
-  const postsPerPage = 30;
+    const postsPerPage = 30;
 
-  const totalPosts = await prisma.blogPost.count();
-  if (totalPosts == 0) {
-    return NextResponse.json({
-      message: "No posts yet... post something to get blogify started!",
-      numberOfPages: 1,
+    const totalPosts = await prisma.blogPost.count();
+    if (totalPosts == 0) {
+      return NextResponse.json({
+        message: "No posts yet... post something to get blogify started!",
+        numberOfPages: 1,
+      });
+    }
+    const numberOfPages = Math.ceil(totalPosts / postsPerPage);
+
+    if (page > numberOfPages) {
+      return NextResponse.json(
+        { error: "The page does not exist" },
+        { status: 400 }
+      );
+    }
+
+    const posts = await prisma.blogPost.findMany({
+      skip: (page - 1) * postsPerPage,
+      take: postsPerPage,
+      orderBy: {
+        createdAt: "desc",
+      },
     });
+
+    return NextResponse.json({ posts, numberOfPages });
   }
-  const numberOfPages = Math.ceil(totalPosts / postsPerPage);
-
-  if (page > numberOfPages) {
-    return NextResponse.json(
-      { error: "The page does not exist" },
-      { status: 400 }
-    );
-  }
-
-  const posts = await prisma.blogPost.findMany({
-    skip: (page - 1) * postsPerPage,
-    take: postsPerPage,
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
-
-  return NextResponse.json({ posts, numberOfPages });
+  return NextResponse.json({ error: "Not logged in" }, { status: 401 });
 }
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
   const valid = await ValidPost.safeParseAsync(body);
-
-  if (valid["success"] == false) {
-    return NextResponse.json(valid["error"], { status: 400 });
-  }
-
   const user = await getSession();
+
   if (user) {
+    if (valid["success"] == false) {
+      return NextResponse.json(valid["error"], { status: 400 });
+    }
+
     const validCategories = Object.values(CategoryName);
 
     if (!validCategories.includes(body.category)) {

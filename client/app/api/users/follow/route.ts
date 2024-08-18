@@ -9,42 +9,56 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const userToFollow = body["id"];
 
-  const userToFollowExists = await prisma.user.findUnique({
-    where: { id: userToFollow },
-  });
+  if (user) {
+    if (!userToFollow) {
+      return NextResponse.json(
+        { error: "Must provide a user to follow" },
+        { status: 400 }
+      );
+    }
 
-  if (!userToFollowExists) {
-    return NextResponse.json({ error: "User does not exist" }, { status: 404 });
+    const userToFollowExists = await prisma.user.findUnique({
+      where: { id: userToFollow },
+    });
+
+    if (!userToFollowExists) {
+      return NextResponse.json(
+        { error: "User does not exist" },
+        { status: 404 }
+      );
+    }
+
+    if (userToFollow == user?.id)
+      return NextResponse.json(
+        { error: "Cannot follow yourself" },
+        { status: 403 }
+      );
+
+    if (user?.following.includes(userToFollow)) {
+      return NextResponse.json(
+        { error: "Already following user" },
+        { status: 403 }
+      );
+    }
+
+    await prisma.user.update({
+      where: { id: userToFollow },
+      data: {
+        followers: { push: user?.id },
+      },
+    });
+
+    await prisma.user.update({
+      where: { id: user?.id },
+      data: {
+        following: { push: userToFollow },
+      },
+    });
+
+    return NextResponse.json({ message: "Followed user" });
   }
 
-  if (userToFollow == user?.id)
-    return NextResponse.json(
-      { error: "Cannot follow yourself" },
-      { status: 403 }
-    );
-
-  if (user?.following.includes(userToFollow)) {
-    return NextResponse.json(
-      { error: "Already following user" },
-      { status: 403 }
-    );
-  }
-
-  await prisma.user.update({
-    where: { id: userToFollow },
-    data: {
-      followers: { push: user?.id },
-    },
-  });
-
-  await prisma.user.update({
-    where: { id: user?.id },
-    data: {
-      following: { push: userToFollow },
-    },
-  });
-
-  return NextResponse.json({ message: "Followed user" });
+  return NextResponse.json({ error: "Not logged in" }, { status: 401 });
 }
 
 export async function DELETE(req: NextRequest) {
@@ -52,48 +66,61 @@ export async function DELETE(req: NextRequest) {
   const body = await req.json();
   const userToUnfollow = body["id"];
 
-  const userToUnfollowExists = await prisma.user.findUnique({
-    where: { id: userToUnfollow },
-  });
+  if (user) {
+    if (!userToUnfollow) {
+      return NextResponse.json(
+        { error: "Must provide a user to unfollow" },
+        { status: 400 }
+      );
+    }
 
-  if (!userToUnfollowExists) {
-    return NextResponse.json({ error: "User does not exist" }, { status: 404 });
-  }
+    const userToUnfollowExists = await prisma.user.findUnique({
+      where: { id: userToUnfollow },
+    });
 
-  if (userToUnfollow == user?.id)
-    return NextResponse.json(
-      { error: "Cannot unfollow yourself" },
-      { status: 403 }
-    );
+    if (!userToUnfollowExists) {
+      return NextResponse.json(
+        { error: "User does not exist" },
+        { status: 404 }
+      );
+    }
 
-  if (!user?.following.includes(userToUnfollow)) {
-    return NextResponse.json(
-      { error: "User is not currently followed" },
-      { status: 403 }
-    );
-  }
+    if (userToUnfollow == user?.id)
+      return NextResponse.json(
+        { error: "Cannot unfollow yourself" },
+        { status: 403 }
+      );
 
-  await prisma.user.update({
-    where: { id: userToUnfollow },
-    data: {
-      followers: {
-        set: userToUnfollowExists.followers.filter(
-          (followerId) => followerId !== user?.id
-        ),
+    if (!user?.following.includes(userToUnfollow)) {
+      return NextResponse.json(
+        { error: "User is not currently followed" },
+        { status: 403 }
+      );
+    }
+
+    await prisma.user.update({
+      where: { id: userToUnfollow },
+      data: {
+        followers: {
+          set: userToUnfollowExists.followers.filter(
+            (followerId) => followerId !== user?.id
+          ),
+        },
       },
-    },
-  });
+    });
 
-  await prisma.user.update({
-    where: { id: user.id },
-    data: {
-      following: {
-        set: user.following.filter(
-          (followingId) => followingId !== userToUnfollow
-        ),
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        following: {
+          set: user.following.filter(
+            (followingId) => followingId !== userToUnfollow
+          ),
+        },
       },
-    },
-  });
+    });
 
-  return NextResponse.json({ message: "Unfollowed user" });
+    return NextResponse.json({ message: "Unfollowed user" });
+  }
+  return NextResponse.json({ error: "Not logged in" }, { status: 401 });
 }

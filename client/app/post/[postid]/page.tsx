@@ -7,7 +7,6 @@ import ShownUser from "@/models/ShownUser";
 import Comment from "@/models/Comment";
 import axios from "axios";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import updateDate from "@/utils/updateDate";
@@ -67,7 +66,7 @@ const page = ({ params }: { params: { postid: string } }) => {
 
   return (
     <main>
-      <NavBar user={user}></NavBar>
+      <NavBar optionalUser={user}></NavBar>
       <div className="flex flex-col lg:flex-row p-4">
         <div className="flex-row lg:flex-col p-2 w-full lg:w-[20%] flex">
           <ul className="menu bg-base-200 w-full rounded-box">

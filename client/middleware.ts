@@ -13,8 +13,17 @@ export async function middleware(request: NextRequest) {
   }
 
   let token = cookies().get("auth");
+  if (
+    !token &&
+    (pathname == "/" ||
+      pathname.startsWith("/signup") ||
+      pathname.startsWith("/login"))
+  ) {
+    return NextResponse.next();
+  }
+
   if (!token) {
-    return NextResponse.json({ error: "Not logged in" }, { status: 401 });
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
   let value = token["value"];
@@ -27,12 +36,29 @@ export async function middleware(request: NextRequest) {
       algorithms: ["HS256"],
     });
 
+    if (
+      pathname == "/" ||
+      pathname.startsWith("/signup") ||
+      pathname.startsWith("/login")
+    ) {
+      return NextResponse.redirect(new URL("/home", request.url));
+    }
+
     return NextResponse.next();
   } catch (err) {
-    return NextResponse.json({ error: "Invalid JWT" }, { status: 401 });
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 }
 
 export const config = {
-  matcher: "/api/:function*",
+  matcher: [
+    "/",
+    "/signup",
+    "/login",
+    "/home",
+    "/post/:path*",
+    "/settings",
+    "/user/:path*",
+    "/write",
+  ],
 };

@@ -33,7 +33,6 @@ const page = () => {
   const updateUsername = async function () {
     const res = await axios
       .put("/api/users/update", {
-        id: user?.id,
         username: username.current?.value,
       })
       .then((res) => {
@@ -47,7 +46,7 @@ const page = () => {
 
   return (
     <main>
-      <NavBar user={user}></NavBar>
+      <NavBar optionalUser={user}></NavBar>
       <div className="p-4 flex flex-col items-center justify-center gap-4">
         <h1 className="text-3xl font-bold">Settings</h1>
         <div className="flex flex-col gap-12 mt-10 w-full">

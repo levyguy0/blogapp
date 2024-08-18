@@ -11,7 +11,6 @@ interface FieldError {
 }
 
 const page = () => {
-  const [user, setUser] = useState<ShownUser | null>();
   const [categoryError, setCategoryError] = useState("");
   const [titleError, setTitleError] = useState("");
   const [descError, setDescError] = useState("");
@@ -21,26 +20,8 @@ const page = () => {
   const descRef = useRef<HTMLTextAreaElement>(null);
   const contentRef = useRef<HTMLTextAreaElement>(null);
   const selectRef = useRef<HTMLSelectElement>(null);
-  const router = useRouter();
 
   useEffect(() => {
-    const checkLoggedIn = async () => {
-      await axios
-        .get("/api/users/me", { withCredentials: true })
-        .then((res) => {
-          if (res.data.user) {
-            setUser(res.data.user);
-          } else {
-            router.replace("/login");
-          }
-        })
-        .catch((err) => {
-          router.replace("/login");
-        });
-    };
-
-    checkLoggedIn();
-
     const fetchCategories = async () => {
       await axios
         .get("/api/category/all", {
@@ -103,7 +84,7 @@ const page = () => {
 
   return (
     <main>
-      <NavBar user={user}></NavBar>
+      <NavBar></NavBar>
       <div className="p-10 flex flex-col gap-8">
         <h1 className="font-bold text-3xl text-info">Create a Blog Post</h1>
         <div className="grid grid-rows-8 gap-4">
