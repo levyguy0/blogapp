@@ -65,7 +65,7 @@ export async function GET(req: NextRequest) {
         { status: 200 }
       );
     } catch {
-      return NextResponse.json({ error: "Invalid Post ID" }, { status: 400 });
+      return NextResponse.json({ error: "Invalid Post ID" }, { status: 404 });
     }
   }
   return NextResponse.json({ error: "Not logged in" }, { status: 401 });

@@ -16,6 +16,7 @@ const page = ({ params }: { params: { postid: string } }) => {
   const [user, setUser] = useState<ShownUser | null>();
   const [post, setPost] = useState<BlogPost>();
   const [comments, setComments] = useState<Comment[]>([]);
+  const [none, setNone] = useState(false);
   const [page, setPage] = useState(1);
   const [numberOfPages, setNumberOfPages] = useState(0);
   const router = useRouter();
@@ -47,6 +48,11 @@ const page = ({ params }: { params: { postid: string } }) => {
           setPost(res.data.post);
           setComments(res.data.comments);
           setNumberOfPages(res.data.numberOfPages);
+        })
+        .catch((err) => {
+          if (err.response.status == 404) {
+            setNone(true);
+          }
         });
     };
 
@@ -73,67 +79,73 @@ const page = ({ params }: { params: { postid: string } }) => {
             <li>
               <button onClick={() => router.back()}>Back</button>
             </li>
-            {post?.authorId == user?.id && (
+            {post?.authorId == user?.id && !none && (
               <li>
                 <button onClick={handleDeletePost}>Delete</button>
               </li>
             )}
           </ul>
         </div>
-        <div className=" p-4 flex flex-col w-full lg:w-[80%]">
-          <div>
-            <div className="text-3xl lg:mt-0 lg:text-5xl font-bold text-info mb-2 lg:mb-5 break-words">
-              {post?.title}
+        {!none ? (
+          <div className=" p-4 flex flex-col w-full lg:w-[80%]">
+            <div>
+              <div className="text-3xl lg:mt-0 lg:text-5xl font-bold text-info mb-2 lg:mb-5 break-words">
+                {post?.title}
+              </div>
             </div>
-          </div>
-          <div className="flex flex-col lg:flex-row gap-2 justify-between">
-            <div className="text-md lg:text-xl mb-2 lg:w-[65%] break-words ">
-              {post?.description}
-            </div>
-            <div className="gap-2 flex">
-              <span className="badge badge-sm lg:badge-md badge-secondary items-end justify-end hover:underline">
-                <Link href={`/user/${post?.authorName}`}>
-                  {post?.authorName}
-                </Link>
-              </span>
-              <span className="badge badge-sm lg:badge-md badge-primary items-end justify-end">
-                {post?.category}
-              </span>
+            <div className="flex flex-col lg:flex-row gap-2 justify-between">
+              <div className="text-md lg:text-xl mb-2 lg:w-[65%] break-words ">
+                {post?.description}
+              </div>
+              <div className="gap-2 flex">
+                <span className="badge badge-sm lg:badge-md badge-secondary items-end justify-end hover:underline">
+                  <Link href={`/user/${post?.authorName}`}>
+                    {post?.authorName}
+                  </Link>
+                </span>
+                <span className="badge badge-sm lg:badge-md badge-primary items-end justify-end">
+                  {post?.category}
+                </span>
 
-              <span className="badge badge-sm lg:badge-md badge-info items-end justify-end">
-                {post?.createdAt
-                  ? updateDate(post?.createdAt)[0]
-                  : post?.createdAt}
-              </span>
-              <span className="badge badge-sm lg:badge-md badge-info hidden lg:flex items-end justify-end">
-                {post?.createdAt
-                  ? updateDate(post?.createdAt)[1]
-                  : post?.createdAt}
-              </span>
+                <span className="badge badge-sm lg:badge-md badge-info items-end justify-end">
+                  {post?.createdAt
+                    ? updateDate(post?.createdAt)[0]
+                    : post?.createdAt}
+                </span>
+                <span className="badge badge-sm lg:badge-md badge-info hidden lg:flex items-end justify-end">
+                  {post?.createdAt
+                    ? updateDate(post?.createdAt)[1]
+                    : post?.createdAt}
+                </span>
+              </div>
             </div>
-          </div>
-          <div className="divider divider-secondary"></div>
-          <div className="">
-            <div className="text-md break-words">{post?.content}</div>
-          </div>
-          <div className="py-10">
-            <CommentBar
-              post={post}
+            <div className="divider divider-secondary"></div>
+            <div className="">
+              <div className="text-md break-words">{post?.content}</div>
+            </div>
+            <div className="py-10">
+              <CommentBar
+                post={post}
+                comments={comments}
+                setComments={setComments}
+                setPage={setPage}
+              ></CommentBar>
+            </div>
+            <CommentFeed
               comments={comments}
-              setComments={setComments}
+              author={post?.authorId}
+            ></CommentFeed>
+            <CommentPagination
+              page={page}
               setPage={setPage}
-            ></CommentBar>
+              numberOfPages={numberOfPages}
+            ></CommentPagination>
           </div>
-          <CommentFeed
-            comments={comments}
-            author={post?.authorId}
-          ></CommentFeed>
-          <CommentPagination
-            page={page}
-            setPage={setPage}
-            numberOfPages={numberOfPages}
-          ></CommentPagination>
-        </div>
+        ) : (
+          <div className="w-full justify-center items-center flex my-5">
+            <span className="badge badge-lg badge-error">No post found</span>
+          </div>
+        )}
       </div>
     </main>
   );
