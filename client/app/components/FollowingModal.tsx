@@ -24,7 +24,9 @@ const FollowingModal = ({ loggedInUser, user }: Props) => {
               ✕
             </button>
           </form>
-          <h3 className="font-bold text-lg">{user?.username}'s following</h3>
+          <h3 className="font-bold text-lg">
+            {user?.username}&apos;s following
+          </h3>
           <ul className="py-4">
             {user?.following && user?.following.length > 0 ? (
               user?.following.map((f) => (

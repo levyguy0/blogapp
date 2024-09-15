@@ -10,7 +10,7 @@ interface FieldError {
   path: string;
 }
 
-const page = () => {
+const WritePage = () => {
   const [categoryError, setCategoryError] = useState("");
   const [titleError, setTitleError] = useState("");
   const [descError, setDescError] = useState("");
@@ -134,4 +134,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default WritePage;

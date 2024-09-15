@@ -5,7 +5,7 @@ import router from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import NavBar from "../components/NavBar";
 
-const page = () => {
+const SettingsPage = () => {
   const [user, setUser] = useState<ShownUser | null>();
   const username = useRef<HTMLInputElement>(null);
   const [error, setError] = useState("");
@@ -80,4 +80,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default SettingsPage;

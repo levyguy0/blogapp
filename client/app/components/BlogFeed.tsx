@@ -24,7 +24,7 @@ const BlogFeed = ({
   setPage,
 }: Props) => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
-  -useEffect(() => {
+  useEffect(() => {
     if (!selectedCategory) {
       const fetchPosts = async () => {
         await axios

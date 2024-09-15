@@ -4,7 +4,7 @@ import NavBar from "../components/NavBar";
 import BlogFeed from "../components/BlogFeed";
 import FilterFeed from "../components/FilterFeed";
 
-const page = () => {
+const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [numberOfPages, setNumberOfPages] = useState(0);
   const [page, setPage] = useState(1);
@@ -34,4 +34,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default HomePage;

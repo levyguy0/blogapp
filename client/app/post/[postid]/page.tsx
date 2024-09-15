@@ -12,7 +12,7 @@ import React, { useEffect, useState } from "react";
 import updateDate from "@/utils/updateDate";
 import CommentPagination from "@/app/components/CommentPagination";
 
-const page = ({ params }: { params: { postid: string } }) => {
+const PostPage = ({ params }: { params: { postid: string } }) => {
   const [user, setUser] = useState<ShownUser | null>();
   const [post, setPost] = useState<BlogPost>();
   const [comments, setComments] = useState<Comment[]>([]);
@@ -151,4 +151,4 @@ const page = ({ params }: { params: { postid: string } }) => {
   );
 };
 
-export default page;
+export default PostPage;

@@ -24,7 +24,9 @@ const FollowersModal = ({ loggedInUser, user }: Props) => {
               ✕
             </button>
           </form>
-          <h3 className="font-bold text-lg">{user?.username}'s followers</h3>
+          <h3 className="font-bold text-lg">
+            {user?.username}&apos;s followers
+          </h3>
           <ul className="py-4">
             {user?.followers && user?.followers.length > 0 ? (
               user?.followers.map((f) => (

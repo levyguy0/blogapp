@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-const page = ({ params }: { params: { username: string } }) => {
+const UserPage = ({ params }: { params: { username: string } }) => {
   const [user, setUser] = useState<ShownUser | null>();
   const [none, setNone] = useState<boolean>(false);
   const [viewedUser, setViewedUser] = useState<ShownUser | null>();
@@ -121,4 +121,4 @@ const page = ({ params }: { params: { username: string } }) => {
   );
 };
 
-export default page;
+export default UserPage;
