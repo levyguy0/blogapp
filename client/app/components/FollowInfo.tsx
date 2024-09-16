@@ -20,7 +20,11 @@ const FollowInfo = ({
     <div className="flex flex-col md:flex-row gap-2">
       <FollowersModal user={user} loggedInUser={loggedInUser}></FollowersModal>
       <button
-        onClick={() => document.getElementById("follower_modal")?.showModal()}
+        onClick={() =>
+          (
+            document.getElementById("follower_modal") as HTMLFormElement
+          )?.showModal()
+        }
         className="badge badge-sm lg:badge-md badge-info"
       >
         {user?.followers.length}{" "}
@@ -28,7 +32,11 @@ const FollowInfo = ({
       </button>
       <FollowingModal user={user} loggedInUser={loggedInUser}></FollowingModal>
       <button
-        onClick={() => document.getElementById("following_modal")?.showModal()}
+        onClick={() =>
+          (
+            document.getElementById("following_modal") as HTMLFormElement
+          )?.showModal()
+        }
         className="badge badge-sm lg:badge-md badge-info"
       >
         {user?.following.length} following

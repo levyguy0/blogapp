@@ -73,8 +73,8 @@ const UserPage = ({ params }: { params: { username: string } }) => {
           )}
           {viewedUser?.posts &&
             viewedUser?.posts.map((p) => (
-              <div className="p-4">
-                <div className="flex flex-col gap-4 p-4" key={p.id}>
+              <div className="p-4" key={p.id}>
+                <div className="flex flex-col gap-4 p-4">
                   <div className="flex gap-2 justify-between">
                     <div className="flex gap-2">
                       <span className="badge badge-sm lg:badge-md badge-primary">
