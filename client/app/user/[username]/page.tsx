@@ -13,6 +13,7 @@ const UserPage = ({ params }: { params: { username: string } }) => {
   const [user, setUser] = useState<ShownUser | null>();
   const [none, setNone] = useState<boolean>(false);
   const [viewedUser, setViewedUser] = useState<ShownUser | null>();
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -41,11 +42,13 @@ const UserPage = ({ params }: { params: { username: string } }) => {
         .then((res) => {
           if (res.data.user) {
             setViewedUser(res.data.user);
+            setLoading(false);
           }
         })
         .catch((err) => {
           if (err.response.status == 404) {
             setNone(true);
+            setLoading(false);
           }
         });
     };
@@ -58,7 +61,11 @@ const UserPage = ({ params }: { params: { username: string } }) => {
       <NavBar optionalUser={user}></NavBar>
       {!none ? (
         <div className="">
-          <UserProfile user={viewedUser} loggedInUser={user}></UserProfile>
+          <UserProfile
+            user={viewedUser}
+            loading={loading}
+            loggedInUser={user}
+          ></UserProfile>
           {viewedUser?.message && (
             <div className="flex flex-col text-center gap-4 p-4 w-screen items-center">
               <h1 className="font-bold text-3xl">{viewedUser?.message}</h1>
