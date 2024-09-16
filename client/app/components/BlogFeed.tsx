@@ -5,6 +5,7 @@ import { BlogPost } from "../../models/BlogPost";
 import Link from "next/link";
 import updateDate from "@/utils/updateDate";
 import Pagination from "./Pagination";
+import BlogFeedSkeletons from "./BlogFeedSkeletons";
 
 interface Props {
   selectedCategory: string | null;
@@ -23,6 +24,7 @@ const BlogFeed = ({
   page,
   setPage,
 }: Props) => {
+  const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState<BlogPost[]>([]);
   useEffect(() => {
     if (!selectedCategory) {
@@ -32,6 +34,7 @@ const BlogFeed = ({
           .then((res: AxiosResponse) => {
             setPosts(res.data.posts);
             setNumberOfPages(res.data["numberOfPages"]);
+            setLoading(false);
           });
       };
 
@@ -48,6 +51,7 @@ const BlogFeed = ({
           .then((res: AxiosResponse) => {
             setPosts(res.data.posts);
             setNumberOfPages(res.data["numberOfPages"]);
+            setLoading(false);
           });
       };
 
@@ -58,6 +62,7 @@ const BlogFeed = ({
   return (
     <div className="feed col-span-4 lg:col-span-3">
       <div>
+        {loading && <BlogFeedSkeletons />}
         {posts ? (
           posts.map((p) => (
             <div className="flex flex-col gap-4 p-4" key={p.id}>

@@ -8,7 +8,6 @@ const prisma = new PrismaClient();
 async function getSession() {
   let token = cookies().get("auth");
   if (!token) {
-    // return NextResponse.json({ error: "Not logged in" }, { status: 401 });
     return;
   }
 
@@ -29,7 +28,6 @@ async function getSession() {
     return user;
   } catch {
     cookies().set("auth", "", { expires: new Date(0) });
-    // return NextResponse.json({ error: "Invalid JWT" }, { status: 401 });
     return;
   }
 }
