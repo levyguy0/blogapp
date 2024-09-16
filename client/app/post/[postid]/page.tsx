@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import updateDate from "@/utils/updateDate";
 import CommentPagination from "@/app/components/CommentPagination";
+import PostPageSkeletons from "@/app/components/PostPageSkeletons";
 
 const PostPage = ({ params }: { params: { postid: string } }) => {
   const [user, setUser] = useState<ShownUser | null>();
@@ -20,6 +21,7 @@ const PostPage = ({ params }: { params: { postid: string } }) => {
   const [page, setPage] = useState(1);
   const [numberOfPages, setNumberOfPages] = useState(0);
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const checkLoggedIn = async () => {
@@ -48,10 +50,12 @@ const PostPage = ({ params }: { params: { postid: string } }) => {
           setPost(res.data.post);
           setComments(res.data.comments);
           setNumberOfPages(res.data.numberOfPages);
+          setLoading(false);
         })
         .catch((err) => {
           if (err.response.status == 404) {
             setNone(true);
+            setLoading(false);
           }
         });
     };
@@ -86,7 +90,9 @@ const PostPage = ({ params }: { params: { postid: string } }) => {
             )}
           </ul>
         </div>
-        {!none ? (
+        {loading ? (
+          <PostPageSkeletons />
+        ) : !none ? (
           <div className=" p-4 flex flex-col w-full lg:w-[80%]">
             <div>
               <div className="text-3xl lg:mt-0 lg:text-5xl font-bold text-info mb-2 lg:mb-5 break-words">
