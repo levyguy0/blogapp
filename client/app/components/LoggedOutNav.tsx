@@ -18,7 +18,7 @@ const LoggedOutNav = () => {
           }
           className="btn btn-ghost text-xl"
         >
-          blogify
+          blabble
         </Link>
       </div>
       <div className="flex-none">

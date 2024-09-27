@@ -26,7 +26,7 @@ const LoggedInNav = ({ user, logout }: Props) => {
             }
             className="btn btn-ghost text-xl"
           >
-            blogify
+            blabble
           </Link>
         </div>
         <div className="flex justify-end flex-1 lg:px-2">
