@@ -1,3 +1,4 @@
+import ValidUsername from "@/models/ValidUsername";
 import getSession from "@/utils/getSession";
 import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
@@ -9,6 +10,11 @@ export async function PUT(req: NextRequest) {
   const user = await getSession();
 
   if (user) {
+    const valid = await ValidUsername.safeParseAsync(body);
+    if (valid["success"] == false) {
+      return NextResponse.json(valid["error"], { status: 400 });
+    }
+
     let checkUsername = await prisma.user.findUnique({
       where: { username: body.username },
     });

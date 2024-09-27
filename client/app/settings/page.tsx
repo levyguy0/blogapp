@@ -28,7 +28,7 @@ const SettingsPage = () => {
     };
 
     checkLoggedIn();
-  });
+  }, []);
 
   const updateUsername = async function () {
     const res = await axios
@@ -40,7 +40,12 @@ const SettingsPage = () => {
         setMessage(res.data["message"]);
       })
       .catch((err) => {
-        setError(err.response.data.error);
+        console.log(err.status);
+        if (err.status == 409) {
+          setError(err.response.data.error);
+        } else {
+          setError(err.response.data.issues[0].message);
+        }
       });
   };
 
@@ -64,9 +69,9 @@ const SettingsPage = () => {
               {message && <div className="text-success text-sm">{message}</div>}
               <div className="card-actions lg:justify-end">
                 <button
-                  className={`btn ${
-                    username.current?.value == user?.username && "btn-disabled"
-                  }`}
+                  // className={`btn ${
+                  //   username.current?.value == user?.username && "btn-disabled"
+                  // }`}
                   onClick={updateUsername}
                 >
                   Save
