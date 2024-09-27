@@ -7,7 +7,8 @@ import NavBar from "../components/NavBar";
 
 const SettingsPage = () => {
   const [user, setUser] = useState<ShownUser | null>();
-  const username = useRef<HTMLInputElement>(null);
+  // const username = useRef<HTMLInputElement>(null);
+  const [username, setUsername] = useState(user?.username);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
@@ -33,7 +34,7 @@ const SettingsPage = () => {
   const updateUsername = async function () {
     const res = await axios
       .put("/api/users/update", {
-        username: username.current?.value,
+        username: username,
       })
       .then((res) => {
         setError("");
@@ -61,7 +62,7 @@ const SettingsPage = () => {
               <input
                 type="text"
                 placeholder="Username"
-                ref={username}
+                onChange={(e) => setUsername(e.target.value)}
                 defaultValue={user?.username}
                 className="input input-bordered input-info w-full max-w-xs"
               />
@@ -69,9 +70,9 @@ const SettingsPage = () => {
               {message && <div className="text-success text-sm">{message}</div>}
               <div className="card-actions lg:justify-end">
                 <button
-                  // className={`btn ${
-                  //   username.current?.value == user?.username && "btn-disabled"
-                  // }`}
+                  className={`btn ${
+                    user?.username == username && "btn-disabled"
+                  }`}
                   onClick={updateUsername}
                 >
                   Save
