@@ -5,9 +5,9 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Blogify",
-  description: "The home for all your blogging needs",
-  icons: "/favicon.ico",
+  title: "Blabble",
+  description: "The home for all chat",
+  icons: "./public/favicon.ico",
 };
 
 export default function RootLayout({
