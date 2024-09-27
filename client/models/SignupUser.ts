@@ -3,7 +3,7 @@ import { z } from "zod";
 const SignupUser = z.object({
   username: z
     .string()
-    .min(4, {
+    .min(3, {
       message: "Username is required and must be at least 4 characters long.",
     })
     .max(16, { message: "Username must not be longer than 16 characters." }),
