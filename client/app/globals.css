@@ -17,3 +17,15 @@ body {
     text-wrap: balance;
   }
 }
+
+.spoiler {
+  background-color: rgb(16, 23, 29);
+  border-radius: 4px;
+  padding: 2px 8px;
+  color: rgb(16, 23, 29);
+  transition: all ease-in-out 0.1s;
+}
+
+.spoiler:hover {
+  color: rgb(164, 184, 206);
+}
