@@ -47,6 +47,10 @@ const PostPage = ({ params }: { params: { postid: string } }) => {
           withCredentials: true,
         })
         .then((res: any) => {
+          res.data.post.content = res.data.post.content.replaceAll(
+            "\n",
+            "<br>"
+          );
           setPost(res.data.post);
           setComments(res.data.comments);
           setNumberOfPages(res.data.numberOfPages);
@@ -127,7 +131,12 @@ const PostPage = ({ params }: { params: { postid: string } }) => {
             </div>
             <div className="divider divider-secondary"></div>
             <div className="">
-              <div className="text-md break-words">{post?.content}</div>
+              {post?.content && (
+                <div
+                  className="text-md break-words"
+                  dangerouslySetInnerHTML={{ __html: post?.content }}
+                ></div>
+              )}
             </div>
             <div className="py-10">
               <CommentBar
