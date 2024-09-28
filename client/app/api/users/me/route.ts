@@ -1,7 +1,6 @@
 import { NextResponse } from "next/dist/server/web/spec-extension/response";
 import getSession from "../../../../utils/getSession";
 import { getFollowersInfo } from "@/utils/getFollowersInfo";
-import ShownUser from "@/models/ShownUser";
 
 export async function GET() {
   const user = await getSession();

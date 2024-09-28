@@ -60,7 +60,7 @@ const WritePage = () => {
     };
 
     await axios
-      .post("/api/posts/", post, { withCredentials: true })
+      .post("/api/posts", post, { withCredentials: true })
       .then(() => {
         location.replace("/home");
       })
