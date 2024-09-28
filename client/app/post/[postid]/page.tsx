@@ -83,7 +83,7 @@ const PostPage = ({ params }: { params: { postid: string } }) => {
             <li>
               <button onClick={() => router.back()}>Back</button>
             </li>
-            {post?.authorId == user?.id && !none && (
+            {!loading && post?.authorId == user?.id && !none && (
               <li>
                 <button onClick={handleDeletePost}>Delete</button>
               </li>
