@@ -39,7 +39,8 @@ export async function POST(req: NextRequest) {
     .setExpirationTime("7 days")
     .sign(key);
 
-  cookies().set("auth", token, { maxAge: 60 * 60 * 24 * 7, secure: true });
+  // cookies().set("auth", token, { maxAge: 60 * 60 * 24 * 7, secure: true });
+  cookies().set("auth", token, { maxAge: 60 * 60 * 24 * 7, secure: false });
 
   return NextResponse.json({ message: "Logged in" }, { status: 200 });
 }
