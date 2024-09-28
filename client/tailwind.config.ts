@@ -16,8 +16,8 @@ const config: Config = {
     },
   },
   daisyui: {
-    themes: ["light", "sunset"],
-    darkTheme: "sunset",
+    themes: ["cmyk", "dracula"],
+    darkTheme: "dracula",
   },
   plugins: [require("@tailwindcss/typography"), require("daisyui")],
 };
