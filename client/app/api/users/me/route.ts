@@ -14,7 +14,6 @@ export async function GET() {
           email: user.email,
           name: user.name,
           username: user.username,
-          posts: user.posts,
           following: await getFollowersInfo(user.following),
           followers: await getFollowersInfo(user.followers),
         },
