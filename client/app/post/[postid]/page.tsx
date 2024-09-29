@@ -12,7 +12,7 @@ import React, { useEffect, useState } from "react";
 import updateDate from "@/utils/updateDate";
 import CommentPagination from "@/app/components/CommentPagination";
 import PostPageSkeletons from "@/app/components/PostPageSkeletons";
-import formatPostContent from "@/utils/formatPostContent";
+import { formatPostContent } from "@/utils/formatPostContent";
 
 const PostPage = ({ params }: { params: { postid: string } }) => {
   const [user, setUser] = useState<ShownUser | null>();

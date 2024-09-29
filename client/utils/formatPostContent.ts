@@ -1,4 +1,4 @@
-export default function formatPostContent(content: string) {
+export function formatPostContent(content: string) {
   // Replace new lines with <br>
   content = content.replaceAll("\n", "<br>");
 
@@ -25,3 +25,32 @@ export default function formatPostContent(content: string) {
 
   return content;
 }
+
+export const insertText = (
+  symbol: string,
+  content: string,
+  setContent: React.Dispatch<React.SetStateAction<string>>
+) => {
+  const anchor = window.getSelection()?.anchorNode as HTMLElement;
+
+  const classList = anchor.classList;
+  let textarea = document.getElementById(
+    "content-editor"
+  ) as HTMLTextAreaElement;
+
+  if (!window.getSelection()?.toString()) return;
+  if (!anchor || !classList.contains("blog-content")) return;
+  if (textarea) {
+    const startPos = textarea.selectionStart;
+    const endPos = textarea.selectionEnd;
+    let selectedText;
+    let before;
+    let after;
+
+    selectedText = content.substring(startPos, endPos);
+    before = content.substring(0, startPos);
+    after = content.substring(endPos);
+
+    setContent(before + symbol + selectedText + symbol + after);
+  }
+};

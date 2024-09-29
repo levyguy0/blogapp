@@ -1,9 +1,9 @@
 "use client";
-import ShownUser from "@/models/ShownUser";
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import NavBar from "../components/NavBar";
-import { useRouter } from "next/navigation";
+import { insertText } from "@/utils/formatPostContent";
+import PostMarkdown from "../components/PostMarkdown";
 
 interface FieldError {
   msg: string;
@@ -14,11 +14,16 @@ const WritePage = () => {
   const [categoryError, setCategoryError] = useState("");
   const [titleError, setTitleError] = useState("");
   const [descError, setDescError] = useState("");
+  const [focused, setFocused] = useState(false);
   const [contentError, setContentError] = useState("");
-  const [categories, setCategories] = useState<string[]>([]);
-  const titleRef = useRef<HTMLTextAreaElement>(null);
-  const descRef = useRef<HTMLTextAreaElement>(null);
   const contentRef = useRef<HTMLTextAreaElement>(null);
+
+  const [categories, setCategories] = useState<string[]>([]);
+
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
+  const [content, setContent] = useState("");
+
   const selectRef = useRef<HTMLSelectElement>(null);
 
   useEffect(() => {
@@ -39,10 +44,6 @@ const WritePage = () => {
     setDescError("");
     setTitleError("");
     setContentError("");
-
-    const title = titleRef.current?.value;
-    const desc = descRef.current?.value;
-    const content = contentRef.current?.value;
     const category = selectRef.current?.value;
 
     if (category == "Category") {
@@ -86,31 +87,46 @@ const WritePage = () => {
     <main>
       <NavBar></NavBar>
       <div className="p-10 flex flex-col gap-8">
-        <h1 className="font-bold text-3xl text-info">Create a Blog Post</h1>
+        <h1 className="font-bold text-3xl text-info text-center md:text-left">
+          Create a Blog Post
+        </h1>
         <div className="grid grid-rows-8 gap-4">
-          <div className=" row-span-1 grid grid-rows-6 gap-2">
+          <div className="blog-title row-span-1 grid grid-rows-6 gap-2">
             <textarea
-              ref={titleRef}
+              id="title-editor"
+              onChange={(e) => setTitle(e.target.value)}
               className="textarea textarea-bordered w-full row-span-5"
               placeholder="Title"
             ></textarea>
             <p className="text-error text-sm row-span-1">{titleError}</p>
           </div>
-          <div className=" row-span-2 grid grid-rows-6 gap-2">
+          <div className="blog-desc row-span-2 grid grid-rows-6 gap-2">
             <textarea
-              ref={descRef}
+              id="desc-editor"
+              onChange={(e) => setDesc(e.target.value)}
               className="textarea textarea-bordered w-full row-span-5"
               placeholder="Description"
             ></textarea>
             <p className="text-error text-sm row-span-1">{descError}</p>
           </div>
-          <div className="gap-2 row-span-5 grid grid-rows-6">
-            <textarea
-              ref={contentRef}
-              className="textarea textarea-bordered w-full  row-span-5"
-              placeholder="Content"
-            ></textarea>
-            <p className="text-error text-sm row-span-1">{contentError}</p>
+          <div className="flex flex-col gap-4 row-span-5">
+            <PostMarkdown
+              contentRef={contentRef}
+              content={content}
+              setContent={setContent}
+            ></PostMarkdown>
+            <div className="blog-content gap-2">
+              <textarea
+                id="content-editor"
+                ref={contentRef}
+                onChange={(e) => setContent(e.target.value)}
+                rows={20}
+                className="textarea textarea-bordered w-full row-span-5"
+                placeholder="Content"
+                value={content}
+              ></textarea>
+              <p className="text-error text-sm row-span-1">{contentError}</p>
+            </div>
           </div>
           <div className="flex flex-col gap-2">
             <select
