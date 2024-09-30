@@ -15,12 +15,13 @@ interface Props {
 const CommentBar = ({ post, setPage, comments, setComments }: Props) => {
   const [errorTextarea, setErrorTextarea] = useState("");
   const [success, setSuccess] = useState("");
-  const commentContent = useRef<HTMLTextAreaElement>(null);
+  const [commentContent, setCommentContent] = useState("");
 
   const sendComment = async () => {
-    let content = commentContent?.current?.value;
+    let content = commentContent;
     if (!content || content.length > 500) {
       setErrorTextarea("Comment must be between 0 and 500 characters long");
+      setSuccess("");
       return;
     }
     setErrorTextarea("");
@@ -34,7 +35,13 @@ const CommentBar = ({ post, setPage, comments, setComments }: Props) => {
       .then((res) => {
         setSuccess(res.data["success"]);
         setPage(1);
-        setComments([res.data.comment, ...comments]);
+        if (comments) {
+          setComments([res.data.comment, ...comments]);
+          setCommentContent("");
+        } else {
+          setComments([res.data.comment]);
+          setCommentContent("");
+        }
       });
   };
 
@@ -42,7 +49,8 @@ const CommentBar = ({ post, setPage, comments, setComments }: Props) => {
     <div className="comment_bar row-span-2 col-span-3 relative">
       <div className="flex flex-col gap-4">
         <textarea
-          ref={commentContent}
+          value={commentContent}
+          onChange={(e) => setCommentContent(e.target.value)}
           className={`textarea-sm textarea textarea-bordered flex-grow ${
             errorTextarea && "textarea-error"
           } ${success && "textarea-success"}`}
