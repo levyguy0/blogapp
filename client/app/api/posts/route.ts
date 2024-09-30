@@ -113,6 +113,8 @@ export async function DELETE(req: NextRequest) {
       );
     }
 
+    await prisma.comment.deleteMany({ where: { blogPostId: body.id } });
+
     await prisma.blogPost.delete({
       where: {
         id: body.id,
