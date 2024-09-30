@@ -90,61 +90,62 @@ const WritePage = () => {
         <h1 className="font-bold text-3xl text-info text-center md:text-left">
           Create a Blog Post
         </h1>
-        <div className="grid grid-rows-8 gap-4">
-          <div className="blog-title row-span-1 grid grid-rows-6 gap-2">
-            <textarea
-              id="title-editor"
-              onChange={(e) => setTitle(e.target.value)}
-              className="textarea textarea-bordered w-full row-span-5"
-              placeholder="Title"
-            ></textarea>
-            <p className="text-error text-sm row-span-1">{titleError}</p>
-          </div>
-          <div className="blog-desc row-span-2 grid grid-rows-6 gap-2">
-            <textarea
-              id="desc-editor"
-              onChange={(e) => setDesc(e.target.value)}
-              className="textarea textarea-bordered w-full row-span-5"
-              placeholder="Description"
-            ></textarea>
-            <p className="text-error text-sm row-span-1">{descError}</p>
-          </div>
-          <div className="flex flex-col gap-4 row-span-5">
-            <PostMarkdown
-              contentRef={contentRef}
-              content={content}
-              setContent={setContent}
-            ></PostMarkdown>
-            <div className="blog-content gap-2">
-              <textarea
-                id="content-editor"
-                ref={contentRef}
-                onChange={(e) => setContent(e.target.value)}
-                rows={20}
-                className="textarea textarea-bordered w-full row-span-5"
-                placeholder="Content"
-                value={content}
-              ></textarea>
-              <p className="text-error text-sm row-span-1">{contentError}</p>
-            </div>
-          </div>
-          <div className="flex flex-col gap-2">
-            <select
-              defaultValue={"Category"}
-              className="select select-bordered w-full max-w-xs"
-              ref={selectRef}
-            >
-              <option disabled>Category</option>
-              {categories.map((c) => (
-                <option key={c}>{c}</option>
-              ))}
-            </select>
-            <div className="text-error text-sm">{categoryError}</div>
-          </div>
-          <button className="btn" onClick={handleUpload}>
-            Upload
-          </button>
+
+        <div className="blog-title flex flex-col gap-2">
+          <textarea
+            id="title-editor"
+            rows={2}
+            onChange={(e) => setTitle(e.target.value)}
+            className="textarea textarea-bordered w-full"
+            placeholder="Title"
+          ></textarea>
+          <p className="text-error text-sm">{titleError}</p>
         </div>
+        <div className="blog-desc flex flex-col gap-2">
+          <textarea
+            id="desc-editor"
+            rows={4}
+            onChange={(e) => setDesc(e.target.value)}
+            className="textarea textarea-bordered w-full"
+            placeholder="Description"
+          ></textarea>
+          <p className="text-error text-sm">{descError}</p>
+        </div>
+        <div className="flex flex-col gap-4">
+          <PostMarkdown
+            contentRef={contentRef}
+            content={content}
+            setContent={setContent}
+          ></PostMarkdown>
+          <div className="blog-content gap-2">
+            <textarea
+              id="content-editor"
+              ref={contentRef}
+              onChange={(e) => setContent(e.target.value)}
+              rows={20}
+              className="textarea textarea-bordered w-full"
+              placeholder="Content"
+              value={content}
+            ></textarea>
+            <p className="text-error text-sm">{contentError}</p>
+          </div>
+        </div>
+        <div className="flex flex-col gap-2">
+          <select
+            defaultValue={"Category"}
+            className="select select-bordered w-full max-w-xs"
+            ref={selectRef}
+          >
+            <option disabled>Category</option>
+            {categories.map((c) => (
+              <option key={c}>{c}</option>
+            ))}
+          </select>
+          <div className="text-error text-sm">{categoryError}</div>
+        </div>
+        <button className="btn" onClick={handleUpload}>
+          Upload
+        </button>
       </div>
     </main>
   );
