@@ -106,21 +106,21 @@ const PostPage = ({ params }: { params: { postid: string } }) => {
                 {post?.description}
               </div>
               <div className="gap-2 flex">
-                <span className="badge badge-sm lg:badge-md badge-secondary items-end justify-end hover:underline">
+                <span className="badge badge-sm lg:badge-md badge-secondary hover:underline">
                   <Link href={`/user/${post?.authorName}`}>
                     {post?.authorName}
                   </Link>
                 </span>
-                <span className="badge badge-sm lg:badge-md badge-primary items-end justify-end">
+                <span className="badge badge-sm lg:badge-md badge-primary">
                   {post?.category}
                 </span>
 
-                <span className="badge badge-sm lg:badge-md badge-info items-end justify-end">
+                <span className="badge badge-sm lg:badge-md badge-info">
                   {post?.createdAt
                     ? updateDate(post?.createdAt)[0]
                     : post?.createdAt}
                 </span>
-                <span className="badge badge-sm lg:badge-md badge-info hidden lg:flex items-end justify-end">
+                <span className="badge badge-sm lg:badge-md badge-info hidden lg:flex">
                   {post?.createdAt
                     ? updateDate(post?.createdAt)[1]
                     : post?.createdAt}

@@ -79,7 +79,7 @@ const BlogFeed = ({
                   <span className="badge badge-info badge-sm lg:badge-md">
                     {updateDate(p.createdAt)[0]}
                   </span>
-                  <span className="hidden lg:block badge badge-info">
+                  <span className="hidden lg:flex badge badge-sm lg:badge-md badge-info">
                     {updateDate(p.createdAt)[1]}
                   </span>
                 </div>
