@@ -94,7 +94,7 @@ const WritePage = () => {
         <div className="blog-title flex flex-col gap-2">
           <textarea
             id="title-editor"
-            rows={2}
+            rows={3}
             onChange={(e) => setTitle(e.target.value)}
             className="textarea textarea-bordered w-full"
             placeholder="Title"
@@ -104,7 +104,7 @@ const WritePage = () => {
         <div className="blog-desc flex flex-col gap-2">
           <textarea
             id="desc-editor"
-            rows={4}
+            rows={6}
             onChange={(e) => setDesc(e.target.value)}
             className="textarea textarea-bordered w-full"
             placeholder="Description"
@@ -112,11 +112,13 @@ const WritePage = () => {
           <p className="text-error text-sm">{descError}</p>
         </div>
         <div className="flex flex-col gap-4">
-          <PostMarkdown
-            contentRef={contentRef}
-            content={content}
-            setContent={setContent}
-          ></PostMarkdown>
+          <div className="hidden md:flex">
+            <PostMarkdown
+              contentRef={contentRef}
+              content={content}
+              setContent={setContent}
+            ></PostMarkdown>
+          </div>
           <div className="blog-content gap-2">
             <textarea
               id="content-editor"
