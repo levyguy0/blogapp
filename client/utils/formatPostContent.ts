@@ -1,4 +1,7 @@
 export function formatPostContent(content: string) {
+  // Remove all other HTML tags
+  content = content.replace(/<\/?[^>]+(>|$)/g, "");
+
   // Replace new lines with <br>
   content = content.replaceAll("\n", "<br>");
 
