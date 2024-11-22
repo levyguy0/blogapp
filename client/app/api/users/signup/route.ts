@@ -6,7 +6,7 @@ const bcrypt = require("bcryptjs");
 const prisma = new PrismaClient();
 
 export async function POST(req: NextRequest) {
-  const disabled = true;
+  const disabled = false;
   if (!disabled) {
     const body = await req.json();
 

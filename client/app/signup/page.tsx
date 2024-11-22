@@ -7,7 +7,7 @@ const page = () => {
     <main>
       <NavBar></NavBar>
       <div className="flex w-screen h-screen justify-center items-center">
-        {1 != 1 ? (
+        {1 == 1 ? (
           <SignupCard></SignupCard>
         ) : (
           <div className="font-extrabold text-2xl flex flex-col items-center justify-center gap-2">
